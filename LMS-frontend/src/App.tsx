@@ -14,6 +14,7 @@ function App() {
   return (
     <>
       <Navbar />
+
       <div className="app-container" style={{ padding: '20px' }}>
         <Routes>
           {/* Default Redirect */}

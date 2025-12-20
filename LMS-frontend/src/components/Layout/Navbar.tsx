@@ -4,7 +4,7 @@ import './Navbar.css';
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <div className="navbar-brand">L.C.U LMS </div>
+            <div className="navbar-brand">L.C.U Library Management System </div>
             <ul className="navbar-links">
                 <li><Link to="/student/my-books">My Books</Link></li>
                 <li><Link to="/student/search">Search</Link></li>
