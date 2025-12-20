@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Layout/Navbar';
 import StudentLogin from './components/Student/StudentLogin';
 import BookSearch from './components/Student/BookSearch';
@@ -12,7 +12,7 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
       <div className="app-container" style={{ padding: '20px' }}>
         <Routes>
@@ -32,7 +32,7 @@ function App() {
           <Route path="/staff/books" element={<BookManagement />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 
