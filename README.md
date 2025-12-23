@@ -19,3 +19,6 @@ If you are developing a production application, we recommend using TypeScript wi
 # LMS-frontend
 Frontend application for the Library Management System (LMS)
 >>>>>>> origin/main
+# Deployment & Infrastructure
+For deployment-related issues and configuration:
+📧 Email:fixesanddeployments@gmail.com
