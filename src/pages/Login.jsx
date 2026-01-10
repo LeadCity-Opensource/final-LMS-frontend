@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import SignupModal from "../components/SignupModal";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const userCredentials = JSON.parse(
-    localStorage.getItem("users") ?? "[]"
-  );
+  const userCredentials = JSON.parse(localStorage.getItem("users") ?? "[]");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showError, setShowError] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   const handleEmailChange = (event) => {
     setNewEmail(event.target.value);
@@ -36,15 +35,12 @@ const LoginPage = () => {
     setNewPassword("");
   };
 
-  
-
   return (
     <>
       <div>
         {showError && (
           <p style={{ color: "red" }}>Invalid email or password.</p>
         )}
-        
       </div>
       <form>
         <h1>Login Page</h1>
@@ -69,7 +65,17 @@ const LoginPage = () => {
         <button type="button" onClick={handleLoginCredentials}>
           Login
         </button>
+        <p>
+          Don't have an account?{" "}
+          <button type="button" onClick={() => setShowSignupModal(true)}>
+            Signup
+          </button>
+        </p>
       </form>
+      <SignupModal
+        isOpen={showSignupModal}
+        onClose={() => setShowSignupModal(false)}
+      />
     </>
   );
 };
