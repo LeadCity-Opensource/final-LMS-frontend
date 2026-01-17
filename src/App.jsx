@@ -1,35 +1,21 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/Login";
-import LandingPage from "./pages/LandingPage";
-import StudentSignup from "./pages/StudentSignup";
-import StaffSignup from "./pages/StaffSignup";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./auth/login.jsx";
 
-import MyBooks from "./components/students/MyBooks";
-import BookSearch from "./components/students/BookSearch";
-import Operation from "./components/staff/Operation";
-import IssueReturn from "./components/staff/IssueReturn";
-import OverdueList from "./components/staff/OverdueList";
+// Temporary pages (create later)
+const AdminDashboard = () => <h1>Admin Dashboard</h1>;
+const StaffDashboard = () => <h1>Staff Dashboard</h1>;
 
-
-const App = () => {
+function App() {
   return (
-    <>
-<Routes>
-  <Route path="/" element={<LandingPage />} />
-  <Route path="/signup/student" element={<StudentSignup />} />
-  <Route path="/signup/staff" element={<StaffSignup />} />
-  <Route path="/login" element={<LoginPage />} />
-  {/* <Route path="/creation" element={<CreationPage />} /> */}
-  <Route path="/operation" element={<Operation />} />
-  <Route path="/students/my-books" element={<MyBooks />} />
-  <Route path="/students/search" element={<BookSearch />} />
-  <Route path="/issuereturn" element={<IssueReturn />} />
-  <Route path="/overduelist" element={<OverdueList />} />
-  
-</Routes>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/staff/dashboard" element={<StaffDashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;
+
