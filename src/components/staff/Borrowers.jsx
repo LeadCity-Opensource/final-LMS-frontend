@@ -72,6 +72,7 @@ const SearchWrapper = styled.div`
   transition: max-height 0.3s ease;
   background: white;
 
+
   @media (max-width: 600px) {
     max-height: ${({ open }) => (open ? "70px" : "0")};
   }
@@ -81,6 +82,7 @@ const SearchBox = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
+  
 `;
 
 const SearchInput = styled.input`
