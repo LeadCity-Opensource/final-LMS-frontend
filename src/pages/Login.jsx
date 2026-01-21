@@ -68,8 +68,8 @@ function Login() {
         <form onSubmit={handleSubmit}>
         <input
           type="email"
-          name="email email"
-          placeholder="Email"
+          name="email"
+          placeholder="Email email"
           value={formData.email}
           onChange={handleChange}
           required
