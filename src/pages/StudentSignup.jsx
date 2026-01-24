@@ -253,7 +253,7 @@ const StudentSignup = () => {
             </button>
           </div>
         </div>
-        {/* <div className="w-full mb-6">
+        <div className="w-full mb-6">
           <label className="block text-sm text-gray-700 mb-1">
             Confirm Password:
           </label>
@@ -275,7 +275,7 @@ const StudentSignup = () => {
               {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
-        </div> */}
+        </div>
 
         <button
           type="submit"
