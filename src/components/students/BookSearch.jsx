@@ -1,6 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import logoImage from "../../Images/School Logo.png";
 import backgroundImage from "../../Images/Background.png";
+import { getAllBooks, searchBooks } from "../../services/api";
+
+
 
 // Mock data for demonstration
 const mockBooks = [
@@ -27,6 +30,7 @@ const mockBooks = [
 ];
 
 export default function BookSearchPage() {
+  const [books, setBooks] = useState([]);
   const [query, setQuery] = useState("");
   const alphabet = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -40,16 +44,62 @@ export default function BookSearchPage() {
   }, [query]);
 
   // Group books by their first letter
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");  
+  
+
+  const fetchAllBooks = async () => {
+    try {
+      setLoading(true);
+      setError(""); 
+      const response = await getAllBooks();
+      // Wrap single object in array if needed
+      setBooks(Array.isArray(response.data) ? response.data : [response.data]);
+    } catch (err) {
+      setError("Failed to load books");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
+  const handleSearch = async (value) => {
+    setQuery(value);
+
+    if (value.trim() === "") {
+      fetchAllBooks();
+      return;
+    }
+  
+    try {
+      setError("");
+      setLoading(true);
+      const response = await searchBooks(value);
+      setBooks(Array.isArray(response.data) ? response.data : [response.data]);
+    } catch (err) {
+      setError("Search failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  
   const groupedBooks = useMemo(() => {
     const groups = {};
-    filteredBooks.forEach((book) => {
-      const firstChar = book.title.charAt(0).toUpperCase();
-      const key = /[0-9]/.test(firstChar) ? "#" : firstChar;
-      if (!groups[key]) groups[key] = [];
-      groups[key].push(book);
+    if (!books || books.length === 0) return groups;
+  
+    books.forEach((book) => {
+      const category = book.category?.trim() || "Uncategorized";
+      if (!groups[category]) groups[category] = [];
+      groups[category].push(book);
     });
+  
     return groups;
-  }, [filteredBooks]);
+  }, [books]);
+  
+  
+  
+  
 
   return (
     <div className="min-h-screen bg-[#00E5FF] font-sans">
@@ -89,6 +139,8 @@ export default function BookSearchPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 /* Added transition-all, duration-300, focus:scale-105, and focus:shadow-xl below */
                 className="w-full bg-white/70 backdrop-blur-md py-2.5 px-10 rounded-full text-sm placeholder-gray-500 focus:outline-none shadow-inner text-black transition-all duration-300 focus:scale-105 focus:shadow-xl focus:bg-white"
+                onChange={(e) => handleSearch(e.target.value)}
+                className="w-full bg-white/70 backdrop-blur-md py-2.5 px-10 rounded-full text-sm placeholder-gray-500 focus:outline-none shadow-inner text-black"
               />
               <svg
                 className="absolute left-3 top-3 w-4 h-4 text-gray-600"
@@ -123,15 +175,13 @@ export default function BookSearchPage() {
 
       {/* --- Alphabet Navigation Strip --- */}
       <div className="flex items-center overflow-x-auto py-4 px-4 no-scrollbar whitespace-nowrap">
-        {alphabet.map((char) => (
-          <div key={char} className="flex items-center">
-            <span className="px-3 text-3xl font-light text-black hover:font-bold cursor-pointer transition-all">
-              {char}
-            </span>
-            <div className="h-8 w-0.5 bg-yellow-400 mx-1"></div>
-          </div>
-        ))}
+
       </div>
+
+      {loading && <div className="text-center mt-10">Loading books...</div>}
+{error && <div className="text-center mt-10 text-red-600">{error}</div>}
+
+
 
       {/* --- Grouped Results --- */}
       <div className="px-4 pb-12">
@@ -164,6 +214,40 @@ export default function BookSearchPage() {
             No results found
           </div>
         )}
+      {Object.keys(groupedBooks).length > 0 ? (
+  Object.keys(groupedBooks).sort().map((category) => (
+    <div key={category} className="mb-10">
+      <h2 className="text-3xl font-bold text-white px-2 mb-4">
+        {category}
+      </h2>
+
+      {groupedBooks[category].map((book) => (
+        <div
+          key={book.id}
+          className="flex justify-between items-end py-4 border-b border-gray-400/40 px-2"
+        >
+          <div>
+            <h3 className="text-lg font-bold text-red-900 underline cursor-pointer">
+              {book.title}
+            </h3>
+            <p className="text-sm text-black italic">
+              {book.author}
+            </p>
+          </div>
+
+          <p className="text-sm font-bold text-black">
+            Available ({book.available})
+          </p>
+        </div>
+      ))}
+    </div>
+  ))
+) : (
+  <div className="text-center mt-20 text-black/50 font-medium">
+    No books available
+  </div>
+)}
+
       </div>
     </div>
   );
