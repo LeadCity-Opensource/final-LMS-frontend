@@ -86,7 +86,7 @@ const StudentSignup = () => {
 
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
-        <div className="w-full mb-4">
+        <div className="md:w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Full Name:</label>
           <input
             type="text"
@@ -98,7 +98,7 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="w-full mb-4">
+        <div className="md:w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">
             Matric Number:
           </label>
@@ -112,7 +112,7 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="w-full mb-4">
+        <div className="md:w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Course:</label>
           <input
             type="text"
@@ -124,7 +124,7 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="w-full mb-4">
+        <div className="md:w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Email:</label>
           <input
             type="email"
@@ -136,7 +136,7 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="w-full mb-4">
+        <div className="md:w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Password:</label>
           <input
             type="password"
@@ -148,7 +148,7 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="w-full mb-6">
+        <div className="md:w-full mb-6">
           <label className="block text-sm text-gray-700 mb-1">
             Confirm Password:
           </label>
@@ -164,7 +164,7 @@ const StudentSignup = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full transition duration-300 mb-4"
+          className="w-55 md:w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full transition duration-300 mb-4"
         >
           Sign Up
         </button>
