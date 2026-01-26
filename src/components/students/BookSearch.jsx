@@ -5,44 +5,11 @@ import { getAllBooks, searchBooks } from "../../services/api";
 
 
 
-// Mock data for demonstration
-const mockBooks = [
-  { id: 1, title: "100 ways to die", author: "Author A", available: 4 },
-  { id: 2, title: "5 ways to bury a body", author: "Author B", available: 4 },
-  {
-    id: 3,
-    title: "A lorem ipsum dolor sit amet.",
-    author: "Author C",
-    available: 4,
-  },
-  {
-    id: 4,
-    title: "B lorem ipsum dolor sit amet.",
-    author: "Author D",
-    available: 4,
-  },
-  {
-    id: 5,
-    title: "C lorem ipsum dolor sit amet.",
-    author: "Author E",
-    available: 4,
-  },
-];
 
 export default function BookSearchPage() {
   const [books, setBooks] = useState([]);
   const [query, setQuery] = useState("");
-  const alphabet = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-
-  // Filter books based on search query
-  const filteredBooks = useMemo(() => {
-    return mockBooks.filter(
-      (book) =>
-        book.title.toLowerCase().includes(query.toLowerCase()) ||
-        book.author.toLowerCase().includes(query.toLowerCase()),
-    );
-  }, [query]);
-
+ 
   // Group books by their first letter
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");  
