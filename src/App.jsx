@@ -15,6 +15,7 @@ import Borrowers from "./components/staff/Borrowers";
 import Header from "./components/staff/Header";
 import BookDetails from "./components/students/BookDetails";
 import MessageCard from "./pages/MessageCard";
+import StudentDashboard from "./components/students/StudentsDashboard";
 
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
   <Route path="/borrowers" element={<Borrowers />} />
   <Route path="/header" element={<Header />} />
   <Route path="/bookdetails" element={<BookDetails />} />
+  <Route path="/students/dashboard" element={<StudentDashboard />} />
 </Routes>
     </>
   );

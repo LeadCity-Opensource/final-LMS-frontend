@@ -1,4 +1,4 @@
-.input-field{
+/* .input-field{
     width: 600px;
     padding: 20px;
     margin: 5px;
@@ -69,8 +69,8 @@
    
   }
   .issue-logo img {
-    width: 80px;   /* change this */
-    height: auto;  /* keeps aspect ratio */
+    width: 80px;  
+    height: auto;  
   }
 
 
@@ -112,7 +112,7 @@
    }
    .input-field[type="date"] {
     color: black;
-    -webkit-text-fill-color: black; /* Safari & Chrome fix */
+    -webkit-text-fill-color: black; 
   }
   }
-  
+   */

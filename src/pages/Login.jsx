@@ -38,7 +38,7 @@ function Login() {
       localStorage.setItem("token", response.data.token);
   
       // Redirect after successful login
-      navigate("/students/search");
+      navigate("/students/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Invalid login details");
     }
