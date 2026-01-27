@@ -15,6 +15,8 @@ import Borrowers from "./components/staff/Borrowers";
 import Header from "./components/staff/Header";
 import BookDetails from "./components/students/BookDetails";
 import MessageCard from "./pages/MessageCard";
+import Dashboard from "./components/Dashboard";
+import AddBook from "./components/staff/AddBook";
 
 
 const App = () => {
@@ -39,8 +41,10 @@ const App = () => {
 
       </Routes> */}
 <Routes>
-  <Route path="/" element={<LandingPage />} />
   <Route path="/messagecard" element={<MessageCard />} />
+  <Route path="/dashboard" element={<Dashboard />} />
+  <Route path="/addbooks" element={<AddBook />} />
+  <Route path="/" element={<LandingPage />} />
   <Route path="/signup/student" element={<StudentSignup />} />
   <Route path="/signup/staff" element={<StaffSignup />} />
   <Route path="/login" element={<LoginPage />} />
