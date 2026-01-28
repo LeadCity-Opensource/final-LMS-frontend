@@ -72,6 +72,10 @@ const BookSearchPage = () => {
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
+  console.log("ALL BOOKS:", books);
+console.log("FILTERED:", filteredBooks);
+console.log("PAGINATED:", paginatedResults);
+
 
   const groupedBooks = useMemo(() => {
     const groups = {};
