@@ -15,7 +15,10 @@ import Borrowers from "./components/staff/Borrowers";
 import Header from "./components/staff/Header";
 import BookDetails from "./components/students/BookDetails";
 import MessageCard from "./pages/MessageCard";
-
+import AdminDashboard from "./components/AdminDashboard";
+import AddBook from "./components/staff/AddBook";
+import StudentsDashboard from "./components/students/StudentsDashboard";
+import StaffDashboard from "./components/students/StaffDashboard";
 
 const App = () => {
   return (
@@ -40,7 +43,7 @@ const App = () => {
       </Routes> */}
 <Routes>
   <Route path="/messagecard" element={<MessageCard />} />
-  <Route path="/dashboard" element={<Dashboard />} />
+  <Route path="/admindashboard" element={<AdminDashboard />} />
   <Route path="/addbooks" element={<AddBook />} />
   <Route path="/" element={<LandingPage />} />
   <Route path="/signup/student" element={<StudentSignup />} />
@@ -55,8 +58,9 @@ const App = () => {
   <Route path="/borrowed" element={<Borrowed />} />
   <Route path="/borrowers" element={<Borrowers />} />
   <Route path="/header" element={<Header />} />
-  <Route path="/bookdetails" element={<BookDetails />} />
-  <Route path="/students/dashboard" element={<StudentDashboard />} />
+  <Route path="/bookdetails/:id" element={<BookDetails />} />
+  <Route path="/students/dashboard" element={<StudentsDashboard />} />
+  <Route path="/staff/dashboard" element={<StaffDashboard />} />
 </Routes>
     </>
   );

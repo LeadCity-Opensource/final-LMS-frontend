@@ -1,8 +1,8 @@
-import StatCard from "../components/StatCard";
-import DashboardLayout from "../components/layout/DashboardLayout";
+import StatCard from "./StatCard";
+import DashboardLayout from "./layout/DashboardLayout";
 // import Topbar from "../components/Topbar";
 
-const Dashboard = () => {
+const AdminDashboard  = () => {
   return (
     <DashboardLayout>
       <div className="bg-blue-50 min-h-screen p-4 sm:p-6">
@@ -79,4 +79,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard ;

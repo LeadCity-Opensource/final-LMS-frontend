@@ -10,7 +10,7 @@ const menu = {
     { name: "My Books", path: "/students/my-books", icon: Users },
   ],
   staff: [
-    { name: "Dashboard", path: "/dashboard", icon: Home },
+    { name: "Dashboard", path: "/admindashboard", icon: Home },
     { name: "Add Books", path: "/addbooks", icon: Plus },
     { name: "Operations", path: "/operation", icon: Users },
     { name: "Assign Staff", path: "/assign-staff", icon: Download },

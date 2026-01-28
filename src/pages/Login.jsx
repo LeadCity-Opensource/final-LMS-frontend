@@ -37,12 +37,24 @@ function Login() {
       // Save token from backend
       localStorage.setItem("token", response.data.token);
   
-      // Redirect after successful login
-      navigate("/students/dashboard");
+      // Save role (optional, for app-wide access)
+      const role = response.data.user.role;
+      localStorage.setItem("role", role);
+  
+      // Redirect based on role
+      if (role === "student") {
+        navigate("/students/dashboard");
+      } else if (role === "staff") {
+        navigate("/staff/dashboard");
+      } else {
+        setError("Unknown user role");
+      }
+  
     } catch (err) {
       setError(err.response?.data?.message || "Invalid login details");
     }
   };
+  
   
   
 

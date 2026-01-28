@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import mockBooks from "../students/BookSearch/mockBooks";
 import BookSearchResults from "../students/BookSearchResults";
 import DashboardLayout from "../layout/DashboardLayout";
+import BookDetails from "./BookDetails";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -112,7 +113,7 @@ const BookSearch = () => {
     </DashboardLayout>
   );
 };
-import { useState, useMemo, useEffect } from "react";
+import {  useMemo, } from "react";
 import logoImage from "../../Images/School Logo.png";
 import backgroundImage from "../../Images/Background.png";
 import { getAllBooks, searchBooks } from "../../services/api";
@@ -248,7 +249,9 @@ export default function BookSearchPage() {
           className="flex justify-between items-end py-4 border-b border-gray-400/40 px-2"
         >
           <div>
-            <h3 className="text-lg font-bold text-red-900 underline cursor-pointer">
+            <h3 
+            onClick={() => navigate(`/bookdetails/${book.id}`)}
+             className="text-lg font-bold text-red-900 underline cursor-pointer">
               {book.title}
             </h3>
             <p className="text-sm text-black italic">

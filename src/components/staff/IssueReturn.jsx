@@ -58,143 +58,149 @@ const IssueReturn = () => {
   return (
     
     <div className='mainform' style={{  border: '1px solid #ccc',  borderRadius: "20px", boxShadow: "inset 2px 2px 5px #888"}}>
-       <div className='issue-logo'>
+      
+       <div className='w-20 mx-auto'>
        <img
       src="/logo.png"
       alt="School Logo"
       className="mb-6 w-40 h-40 object-contain"
     />
        </div>
-     <h2 style={{ borderBottom: "2px solid #D3D3D3", display: "block",  width: "auto"}}>ISSUE BOOK</h2>
+
+       <h2 className="text-center text-2xl font-bold border-b-2 border-gray-300 pb-2">
+  ISSUE BOOK
+</h2>
+
      <br />
      
-     <div className='info-cont'>
-     <p className='subtitle'>STUDENT INFORMATION</p>
-     {/* studnet information */}
-      <div className='student-info' style={{  flexDirection: "row", gap: "20px", alignItems: "center", flexWrap: "wrap",}}>
-        <input
-        required
-        className='input-field'
-          style={{    borderRadius: "20px",   background: "#D3D3D3"}}
-          placeholder="Full Name" 
-          value={formData.fullName}
-          onChange={(e) => { setFormData({...formData, fullName: e.target.value})
-          setSuccessMessage("");
-          }}
-          
-        />
-        <input
-        required
-        className='input-field'
-          style={{   borderRadius: "20px",   background: "#D3D3D3",}}
-          placeholder="Matric Number" 
-          value={formData.matricNumber}
-          onChange={(e) => { setFormData({...formData, matricNumber: e.target.value})
-          setSuccessMessage("");
-          }}
-        />
-        <input
-        required
-        className='input-field'
-          style={{    borderRadius: "20px",   background: "#D3D3D3"}}
-          placeholder="Phone Number" 
-          value={formData.phoneNumber}
-          onChange={(e) => { setFormData({...formData, phoneNumber: e.target.value})
-          setSuccessMessage("");
-          }}
-        />
-        <input
-        required
-        className='input-field'
-          style={{   borderRadius: "20px",   background: "#D3D3D3",}}
-          placeholder="Email Address" 
-          value={formData.email}
-          onChange={(e) => { setFormData({...formData, email: e.target.value})
-          setSuccessMessage("");
-          }}
-        />
-        <input
-        required
-        className='input-field'
-          style={{    borderRadius: "20px",   background: "#D3D3D3"}}
-          placeholder="Course" 
-          value={formData.course}
-          onChange={(e) => { setFormData({...formData, course: e.target.value})
-          setSuccessMessage("");
-          }}
-        />
-        <input
-        required
-        className='input-field'
-          style={{   borderRadius: "20px",   background: "#D3D3D3",}}
-          placeholder="Level" 
-          value={formData.level}
-          onChange={(e) =>{ setFormData({...formData, level: e.target.value})
-          setSuccessMessage("");
-          }}
-        /> 
-      </div>
-      <br />
+     <div className='info-cont w-full max-w-4xl mx-auto'>
+     <p className=''>STUDENT INFORMATION</p>
+     {/* STUDENT INFORMATION */}
+<div className="grid grid-cols-2 gap-10">
+  {/* Row 1: Full Name + Matric Number */}
+  <input
+    required
+    className="px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Full Name"
+    value={formData.fullName}
+    onChange={(e) => { setFormData({...formData, fullName: e.target.value}); setSuccessMessage(""); }}
+  />
+  <input
+    required
+    className="px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Matric Number"
+    value={formData.matricNumber}
+    onChange={(e) => { setFormData({...formData, matricNumber: e.target.value}); setSuccessMessage(""); }}
+  />
+
+  {/* Row 2: Phone Number + Email */}
+  <input
+    required
+    className="px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Phone Number"
+    value={formData.phoneNumber}
+    onChange={(e) => { setFormData({...formData, phoneNumber: e.target.value}); setSuccessMessage(""); }}
+  />
+  <input
+    required
+    className="px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Email Address"
+    value={formData.email}
+    onChange={(e) => { setFormData({...formData, email: e.target.value}); setSuccessMessage(""); }}
+  />
+
+  {/* Row 3: Course + Level */}
+  <input
+    required
+    className="px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Course"
+    value={formData.course}
+    onChange={(e) => { setFormData({...formData, course: e.target.value}); setSuccessMessage(""); }}
+  />
+  <input
+    required
+    className="px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Level"
+    value={formData.level}
+    onChange={(e) => { setFormData({...formData, level: e.target.value}); setSuccessMessage(""); }}
+  />
+</div>
 
 
 
-      <p className='subtitle'>BOOK INFORMATION</p>
-      {/* book information */}
-      <div className='book-info' style={{  flexDirection: "column", gap: "20px",  flexWrap: "wrap",}}>
-        <input
-        required
-        className="input-field2"
-          style={{  fontSize: "14px",   borderRadius: "20px",   background: "#D3D3D3", }}
-          placeholder="Book Title" 
-          value={formData.bookTitle}
-          onChange={(e) => { setFormData({...formData, bookTitle: e.target.value})
-          setSuccessMessage("");
-          }}
-        />
-        <input
-        required
-        className="input-field2"
-          style={{  fontSize: "14px",  borderRadius: "20px",   background: "#D3D3D3",}}
-          placeholder="Book ID / ISBN" 
-          value={formData.bookIsbn}
-          onChange={(e) => { setFormData({...formData, bookIsbn: e.target.value})
-          setSuccessMessage("");
-          }}
-        />
-      </div>
-      <br />
+
+<p className='subtitle mt-6'>BOOK INFORMATION</p>
+<div className="flex flex-wrap gap-4">
+  <input
+    required
+    className="flex-1 min-w-[200px] px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Book Title"
+    value={formData.bookTitle}
+    onChange={(e) => { setFormData({...formData, bookTitle: e.target.value}); setSuccessMessage(""); }}
+  />
+  <input
+    required
+    className="flex-1 min-w-[200px] px-5 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-sky-400 bg-gray-200"
+    placeholder="Book ID / ISBN"
+    value={formData.bookIsbn}
+    onChange={(e) => { setFormData({...formData, bookIsbn: e.target.value}); setSuccessMessage(""); }}
+  />
+</div>
 
 
 
-      {/* issue date */}
-      <p className='subtitle'>ISSUE & RETURN DATE</p>
-      <div className='issue-info' style={{ flexDirection: "row", gap: "20px", alignItems: "center", flexWrap: "wrap",}}>
-      <input required className='input-field' type="date" style={{ borderRadius: "20px", background: "#D3D3D3"}} placeholder="Issue Date" value={formData.issueDate} 
+
+<p className='subtitle mt-6'>ISSUE & RETURN DATE</p>
+<div className="flex flex-wrap gap-4">
+  {/* Issue Date */}
+  <div className="flex-1 min-w-[200px] flex flex-col">
+    <label className="mb-1 text-sm text-gray-600">Issue Date</label>
+    <input
+      required
+      type="date"
+      className="px-5 py-3 rounded-xl border bg-gray-200 text-black"
+      value={formData.issueDate}
       onChange={(e) => {
         setFormData({ ...formData, issueDate: e.target.value });
         setSuccessMessage("");
       }}
-      />
+    />
+  </div>
 
-<input required className='input-field' type="date" style={{ color: "black", borderRadius: "20px", background: "#D3D3D3",}} placeholder="Return Date" value={formData.returnDate} 
-onChange={(e) => {
-  setFormData({ ...formData, returnDate: e.target.value });
-  setSuccessMessage("");
-}}
-/>
+  {/* Return Date */}
+  <div className="flex-1 min-w-[200px] flex flex-col">
+    <label className="mb-1 text-sm text-gray-600">Return Date</label>
+    <input
+      required
+      type="date"
+      className="px-5 py-3 rounded-xl border bg-gray-200 text-black"
+      value={formData.returnDate}
+      onChange={(e) => {
+        setFormData({ ...formData, returnDate: e.target.value });
+        setSuccessMessage("");
+      }}
+    />
+  </div>
+</div>
 
-      </div>
 
-      <div style={{ textAlign: "center" }}>
-      <button className="submit-btn" style={{   fontSize: "20px", borderRadius: "20px", background: "linear-gradient(to right, #22d3ee, #3b82f6)", color: "white"}} onClick={handleSubmit}>Issue Book</button>
-      {/* <button style={{ border: "1px solid black" }} onClick={() => handleAction('return')}>Return</button> */}
-      {successMessage && (
-  <p style={{ color: "green", fontWeight: "bold", marginTop: "20px", textAlign: "center" }}>
-    {successMessage}
-  </p>
-)}
+<div className="flex flex-col items-center gap-5 mt-6">
+<button
+  className="w-72 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-white font-semibold py-3 rounded-full transition-colors duration-300"
+  onClick={handleSubmit}
+>
+  Issue Book
+</button>
 
-      </div>
+
+  {successMessage && (
+    <p className="text-green-600 font-bold text-center mt-2">
+      {successMessage}
+    </p>
+  )}
+</div>
+<br />
+
      </div>
      
     </div>

@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import "./StudentsDashboard.css";
+import "./StaffDashboard.css";
 import { Link } from "react-router-dom";
 
 
@@ -13,7 +13,7 @@ const books = [
   { title: "Biography", img: "https://picsum.photos/200?4" },
 ];
 
-function StudentsDashboard() {
+function StaffDashboard() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -29,11 +29,33 @@ function StudentsDashboard() {
 
         <ul>
           <li>Profile</li>
-          <li>
-  <Link to="/students/search" className="cursor-pointer  hover:text-white-600">
+          <li className="relative group">
+  <span className="flex items-center gap-1 cursor-pointer hover:text-white-600">
     Library
-  </Link>
+    <span className="text-sm">▼</span>
+  </span>
+
+  <ul className="absolute left-0 mt-2 w-40 bg-black/80 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
+    <li>
+      <Link
+        to="/students/search"
+        className="block px-4 py-2 hover:bg-blue-500 hover:text-white"
+      >
+        Books
+      </Link>
+    </li>
+    <li>
+      <Link
+        to="/borrowed"
+        className="block px-4 py-2 hover:bg-blue-500 hover:text-white"
+      >
+        Borrowed Books
+      </Link>
+    </li>
+  </ul>
 </li>
+
+
 
           <li>Borrowed Books</li>
           <li>Downloads</li>
@@ -77,4 +99,4 @@ function StudentsDashboard() {
   );
 }
 
-export default StudentsDashboard;
+export default StaffDashboard;

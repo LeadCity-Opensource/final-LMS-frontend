@@ -69,48 +69,52 @@ const MyBooks = () => {
       <DashboardLayout>
         <div className="flex justify-center items-center h-64 text-gray-500 text-lg">
           Loading your books...
+        </div> {/* ✅ CLOSED PROPERLY */}
+
         <div className="my-books-container">
-            <h2 className="my-books-title">My Borrowed Books</h2>
+          <h2 className="my-books-title">My Borrowed Books</h2>
 
-            {/* Placeholder overdue notifications workflow */}
-            <OverdueNotifications studentId={studentId} />
+          <OverdueNotifications studentId={studentId} />
 
-            {myRecords.length === 0 ? (
-                <p>You have no borrowed books.</p>
-            ) : (
-                <div className="table-wrapper">
-                    <table className="books-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Author</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {myRecords.map(record => {
-                                // const book = getBookDetails(record.bookId);
-                                const isOverdue = new Date(record.dueDate) < new Date();
-                                return (
-                                    <tr key={record.id} className={isOverdue ? 'row-overdue' : ''}>
-                                        <td>{record?.title || 'Unknown Title'}</td>
-                                        <td>{record?.author || 'Unknown Author'}</td>
-                                        <td className={isOverdue ? 'text-overdue' : ''}>
-                                            {record.dueDate} {isOverdue && '(Overdue)'}
-                                        </td>
-                                        <td>
-                                            <span className={`status-badge ${isOverdue ? 'status-overdue' : 'status-active'}`}>
-                                                {isOverdue ? 'Overdue' : 'Active'}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            )}
+          {myRecords.length === 0 ? (
+            <p>You have no borrowed books.</p>
+          ) : (
+            <div className="table-wrapper">
+              <table className="books-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {myRecords.map(record => {
+                    const isOverdue = new Date(record.dueDate) < new Date();
+                    return (
+                      <tr key={record.id} className={isOverdue ? 'row-overdue' : ''}>
+                        <td>{record?.title || 'Unknown Title'}</td>
+                        <td>{record?.author || 'Unknown Author'}</td>
+                        <td className={isOverdue ? 'text-overdue' : ''}>
+                          {record.dueDate} {isOverdue && '(Overdue)'}
+                        </td>
+                        <td>
+                          <span
+                            className={`status-badge ${
+                              isOverdue ? 'status-overdue' : 'status-active'
+                            }`}
+                          >
+                            {isOverdue ? 'Overdue' : 'Active'}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </DashboardLayout>
     );
@@ -123,7 +127,6 @@ const MyBooks = () => {
           My Borrowed Books
         </h2>
 
-        {/* Overdue notifications */}
         <OverdueNotifications studentId={studentId} />
 
         {myRecords.length === 0 ? (
@@ -133,51 +136,24 @@ const MyBooks = () => {
             <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Title
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Author
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Due Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {myRecords.map((record) => {
                   const isOverdue = new Date(record.dueDate) < new Date();
                   return (
-                    <tr
-                      key={record.id}
-                      className={isOverdue ? 'bg-red-50' : ''}
-                    >
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
-                        {record?.title || 'Unknown Title'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">
-                        {record?.author || 'Unknown Author'}
-                      </td>
-                      <td
-                        className={`px-6 py-4 whitespace-nowrap ${
-                          isOverdue ? 'text-red-600 font-semibold' : ''
-                        }`}
-                      >
+                    <tr key={record.id} className={isOverdue ? 'bg-red-50' : ''}>
+                      <td>{record?.title || 'Unknown Title'}</td>
+                      <td>{record?.author || 'Unknown Author'}</td>
+                      <td>
                         {record.dueDate} {isOverdue && '(Overdue)'}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            isOverdue
-                              ? 'bg-red-100 text-red-800'
-                              : 'bg-green-100 text-green-800'
-                          }`}
-                        >
-                          {isOverdue ? 'Overdue' : 'Active'}
-                        </span>
+                      <td>
+                        {isOverdue ? 'Overdue' : 'Active'}
                       </td>
                     </tr>
                   );
