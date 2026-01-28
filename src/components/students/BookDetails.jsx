@@ -30,24 +30,55 @@ const BookDetails = () => {
     const [isBorrowed, setIsBorrowed] = useState(false);
 
     const handleBorrow = () => {
-        if (book.available && !isBorrowed) {
-          setIsBorrowed(true);
-          alert(`You have borrowed "${book.title}"`);
+        if (!book.available || isBorrowed) return;
       
-          // Get current borrowed books from localStorage
-          // When borrowing a book
-const borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks")) || [];
-borrowedBooks.push(book);
-localStorage.setItem("borrowedBooks", JSON.stringify(borrowedBooks));
-
+        // Get current user (student or staff)
+        const user = JSON.parse(localStorage.getItem("user")) || {
+          name: "Unknown User",
+          email: "unknown@email.com",
+          role: "staff",
+        };
       
-          // Add new book
-          localStorage.setItem("borrowedBooks", JSON.stringify([...borrowedBooks, book]));
+        // Load existing borrowers list
+        const borrowers = JSON.parse(localStorage.getItem("borrowers")) || [];
       
-          // Navigate
-          navigate("/borrowed");
-        }
-      };
+        const borrowedAt = new Date();
+        const dueDate = new Date();
+        dueDate.setDate(dueDate.getDate() + 7); // 7 days loan period
+      
+        // Create new borrow record
+        const newBorrow = {
+          borrowId: Date.now(), // unique ID
+          user: {
+            name: user.name,
+            email: user.email,
+            role: user.role,
+          },
+          book: {
+            id: book.id,
+            title: book.title,
+            author: book.author,
+          },
+          borrowedAt: borrowedAt.toISOString(),
+          dueDate: dueDate.toISOString(),
+          status: "borrowed",
+          type: "due", // default type
+        };
+      
+        borrowers.push(newBorrow);
+      
+        // Save back to localStorage
+        localStorage.setItem("borrowers", JSON.stringify(borrowers));
+      
+        // Mark as borrowed in this session
+        setIsBorrowed(true);
+      
+        alert(`"${book.title}" borrowed successfully`);
+      
+        // Navigate to Borrowers page
+        navigate("/borrowers");
+      };      
+      
       
       
 

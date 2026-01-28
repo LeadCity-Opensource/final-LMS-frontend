@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
-import { Home, Book, Users, LogOut, Settings, Download, Plus, FileQuestionIcon } from "lucide-react";
+import { Home, Book, Users, LogOut, Settings, Download, Plus, FileQuestionIcon, BookOpen, ChevronDown } from "lucide-react";
 
 const menu = {
   student: [
@@ -12,6 +12,15 @@ const menu = {
   staff: [
     { name: "Dashboard", path: "/admindashboard", icon: Home },
     { name: "Add Books", path: "/addbooks", icon: Plus },
+    {
+      name: "Library",
+      icon: BookOpen,
+      children: [
+        { name: "Books", path: "/students/search" },
+        { name: "Borrowed Books", path: "/borrowed" },
+        { name: "Borrowers", path: "/borrowers" },
+      ],
+    },
     { name: "Operations", path: "/operation", icon: Users },
     { name: "Assign Staff", path: "/assign-staff", icon: Download },
     { name: "Settings", path: "/settings", icon: Settings },
@@ -27,6 +36,8 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
   const overlayRef = useRef(null);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const navigate = useNavigate();
+  const [openMenu, setOpenMenu] = useState(null);
+
 
   // Update isDesktop on resize
   useEffect(() => {
@@ -162,22 +173,76 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
 
           {/* Menu */}
           <nav className="px-4 space-y-1">
-            {menu[role].map(({ name, path, icon: Icon }) => (
-              <NavLink
-                key={name}
-                to={path}
-                onClick={onClose}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 p-2 rounded ${
-                    isActive ? "bg-red-600" : "hover:bg-gray-700"
-                  }`
-                }
-              >
-                <Icon size={18} />
-                {name}
-              </NavLink>
-            ))}
-          </nav>
+  {menu[role].map((item, index) => {
+    const Icon = item.icon;
+    const isOpen = openMenu === index;
+
+    // ✅ DROPDOWN ITEM
+    if (item.children) {
+      return (
+        <div key={item.name}>
+          <button
+            onClick={() =>
+              setOpenMenu(isOpen ? null : index)
+            }
+            className="w-full flex items-center justify-between p-2 rounded hover:bg-gray-700"
+          >
+            <div className="flex items-center gap-3">
+              <Icon size={18} />
+              <span>{item.name}</span>
+            </div>
+
+            <ChevronDown
+              size={18}
+              className={`transition-transform ${
+                isOpen ? "rotate-180" : ""
+              }`}
+            />
+          </button>
+
+          {isOpen && (
+            <div className="ml-9 mt-1 space-y-1">
+              {item.children.map((child) => (
+                <NavLink
+                  key={child.name}
+                  to={child.path}
+                  onClick={onClose}
+                  className={({ isActive }) =>
+                    `block p-2 rounded text-sm ${
+                      isActive
+                        ? "bg-red-600"
+                        : "hover:bg-gray-700"
+                    }`
+                  }
+                >
+                  {child.name}
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ✅ NORMAL MENU ITEM
+    return (
+      <NavLink
+        key={item.name}
+        to={item.path}
+        onClick={onClose}
+        className={({ isActive }) =>
+          `flex items-center gap-3 p-2 rounded ${
+            isActive ? "bg-red-600" : "hover:bg-gray-700"
+          }`
+        }
+      >
+        <Icon size={18} />
+        {item.name}
+      </NavLink>
+    );
+  })}
+</nav>
+
         </div>
 
         {/* Logout Section */}

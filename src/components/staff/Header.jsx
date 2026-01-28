@@ -77,10 +77,10 @@ function Header() {
       <Overlay open={open} onClick={() => setOpen(false)} />
 
       <SideNav open={open}>
-        <NavItem href="#">
+        <NavItem href="/admindashboard">
           <strong>Dashboard</strong>
         </NavItem>
-        <NavItem href="#">
+        <NavItem href="/borrowed">
           <strong>Borrowed</strong>
         </NavItem>
         <NavItem href="#">

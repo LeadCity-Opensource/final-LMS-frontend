@@ -23,8 +23,9 @@ export const studentSignup = (data) => {
   return api.post("/api/auth/student-signup", data);
 };
 
-export const staffSignup = (data) => {
-  return api.post("/api/auth/staff-signup", data);
+// services/api.js
+export const adminCreateUser = (data) => {
+  return api.post("/api/admin/create-user", data);
 };
 
 export const getAllBooks = () => {

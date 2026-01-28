@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import { FiSearch, FiX } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Page = styled.section`
   border-radius: 0%;
@@ -214,7 +215,10 @@ const MOCK_DATA = [
 function BorrowersPage() {
   const [openSearch, setOpenSearch] = useState(false);
   const [query, setQuery] = useState("");
-  const [borrowers] = useState(MOCK_DATA);
+  const [borrowers, setBorrowers] = useState(() => {
+    return JSON.parse(localStorage.getItem("borrowers")) || [];
+  });
+  const navigate = useNavigate();
 
   const filtered = borrowers.filter((b) =>
     `${b.name} ${b.book}`.toLowerCase().includes(query.toLowerCase()),
@@ -259,19 +263,25 @@ function BorrowersPage() {
             </p>
           )}
 
-          {filtered.map((b, i) => (
-            <Borrower key={i}>
-              <Info>
-                {b.name}
-                <small>{b.date}</small>
-              </Info>
+{filtered.map((b, i) => (
+  <Borrower
+    key={i}
+    onClick={() => navigate(`/messagecard/${b.borrowId}`)}
+    style={{ cursor: "pointer" }}
+  >
+    <Info>
+      {b.user?.name || b.name}
+      <small>{new Date(b.borrowedAt || b.date).toLocaleString()}</small>
+    </Info>
 
-              <Right>
-                <strong>{b.book}</strong>
-                <Status type={b.type}>{b.status}</Status>
-              </Right>
-            </Borrower>
-          ))}
+    <Right>
+      <strong>{b.book?.title || b.book}</strong>
+      <Status type={b.type}>{b.status}</Status>
+    </Right>
+  </Borrower>
+))}
+
+
         </List>
       </Page>
     </>

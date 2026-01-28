@@ -2,10 +2,17 @@ import React from 'react';
 import DashboardLayout from '../layout/DashboardLayout';
 
 const OverdueList = () => {
-  const overdueData = [
-    { id: 1, title: "Psychology Of Money", student: "Dunsin", daysLate: 5 },
-    { id: 2, title: "Java For Beginners", student: "Demilade", daysLate: 2 }
-  ];
+  const allBorrowers = JSON.parse(localStorage.getItem("borrowers")) || [];
+
+const overdueData = allBorrowers
+  .filter(b => new Date() > new Date(b.dueDate)) // books past due
+  .map(b => ({
+    id: b.borrowId,
+    title: b.book.title,
+    student: b.user.name,
+    daysLate: Math.ceil((new Date() - new Date(b.dueDate)) / (1000 * 60 * 60 * 24)),
+  }));
+
 
   return (
     <DashboardLayout>

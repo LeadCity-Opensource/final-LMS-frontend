@@ -42,7 +42,7 @@ const App = () => {
 
       </Routes> */}
 <Routes>
-  <Route path="/messagecard" element={<MessageCard />} />
+  <Route path="/messagecard/:borrowId" element={<MessageCard />} />
   <Route path="/admindashboard" element={<AdminDashboard />} />
   <Route path="/addbooks" element={<AddBook />} />
   <Route path="/" element={<LandingPage />} />
