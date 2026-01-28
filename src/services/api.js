@@ -36,23 +36,8 @@ export const searchBooks = (query) => {
   return api.get(`/api/book/search?query=${query}`);
 };
 
-// Add book 
-export const createBook = (bookData, token) => {
-  return api.post("/api/book", bookData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
-// Delete a book by ID 
-export const deleteBook = (bookId, token) => {
-  return api.delete(`/api/book/${bookId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
+export const createBook = (bookData) => api.post("/api/book", bookData);
+export const deleteBook = (bookId) => api.delete(`/api/book/${bookId}`);
 
 
 

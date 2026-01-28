@@ -38,19 +38,19 @@ function Login() {
       const token = response.data.token;
       localStorage.setItem("token", token);
       
-      // Set token in axios for all future requests
-      setAuthToken(token);
+     
       
       // Save role (optional, for app-wide access)
       const role = response.data.role;
       localStorage.setItem("role", role);
       
-      setAuthToken(token);
+      
   
       navigate("/students/dashboard"); 
   
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid login details");
+      setError(err.response?.data?.message || err.message || "Login failed");
+
     }
   };
   
