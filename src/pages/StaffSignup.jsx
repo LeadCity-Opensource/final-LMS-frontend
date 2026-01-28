@@ -146,7 +146,7 @@ const StaffSignup = () => {
           </label>
           <input
             type="text"
-            name="staffId"
+            name="idNumber"
             placeholder="STF12345"
             required
             value={formData.idNumber}
