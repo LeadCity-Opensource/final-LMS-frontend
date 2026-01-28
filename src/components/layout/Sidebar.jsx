@@ -186,14 +186,15 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
         </nav>
 
         {/* Bottom Logout */}
-        <div className="absolute bottom-4 px-4 w-full">
-      <button
-        onClick={handleLogout}
-        className="flex items-center gap-2 bg-red-700 text-white p-2 rounded hover:bg-red-800 hover:scale-105 transition cursor-pointer"
-      >
-        <LogOut size={18} /> Logout
-      </button>
-    </div>
+        <div className="absolute bottom-4 px-4 w-full z-50">
+  <button
+    onClick={handleLogout}
+    className="flex items-center gap-2 bg-red-700 text-white p-2 rounded hover:bg-red-800 hover:scale-105 transition cursor-pointer"
+  >
+    <LogOut size={18} /> Logout
+  </button>
+</div>
+
       </aside>
     </>
   );
