@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { Home, Book, Users, LogOut, Settings, Download, Plus, FileQuestionIcon } from "lucide-react";
 
@@ -26,6 +26,7 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
   const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+  const navigate = useNavigate();
 
   // Update isDesktop on resize
   useEffect(() => {
@@ -34,6 +35,15 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleLogout = () => {
+    // Remove token and role
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    // Navigate to login page
+    navigate("/login");
+  };
+  
   // GSAP slide animation
   useEffect(() => {
     if (!sidebarRef.current || !overlayRef.current) return;
@@ -177,12 +187,13 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
 
         {/* Bottom Logout */}
         <div className="absolute bottom-4 px-4 w-full">
-          <button className="flex items-center gap-2 bg-red-700 text-white  p-2 rounded hover:bg-red-800 hover:scale-105 transition cursor-pointer"
-          path="/logout"
-          >
-            <LogOut size={18} /> Logout
-          </button>
-        </div>
+      <button
+        onClick={handleLogout}
+        className="flex items-center gap-2 bg-red-700 text-white p-2 rounded hover:bg-red-800 hover:scale-105 transition cursor-pointer"
+      >
+        <LogOut size={18} /> Logout
+      </button>
+    </div>
       </aside>
     </>
   );

@@ -35,7 +35,11 @@ function StudentsDashboard() {
   </Link>
 </li>
 
-          <li>Borrowed Books</li>
+          <li>
+            <Link to="/borrowed" className="cursor-pointer hover:text-white-600">
+            Borrowed Books
+            </Link>
+            </li>
           <li>Downloads</li>
           <li>History</li>
           <li>Settings</li>
