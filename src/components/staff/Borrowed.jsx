@@ -123,19 +123,21 @@ const DueText = styled.div`
 
 const BorrowedPage = () => {
   const location = useLocation();
-  const borrowedBook = location.state?.book; // Get book from navigation
-  const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState(
+    JSON.parse(localStorage.getItem("borrowedBooks") || "[]")
+  );
+  
 
   // Add book from navigation to borrowedBooks
   useEffect(() => {
-    if (borrowedBook) {
+    if (borrowedBooks) {
       setBorrowedBooks((prev) => {
         // Avoid duplicates
         if (prev.find((b) => b.id === borrowedBook.id)) return prev;
         return [...prev, borrowedBook];
       });
     }
-  }, [borrowedBook]);
+  }, [borrowedBooks]);
 
   if (borrowedBooks.length === 0) {
     return (

@@ -34,10 +34,17 @@ const BookDetails = () => {
           setIsBorrowed(true);
           alert(`You have borrowed "${book.title}"`);
       
-          // Navigate to borrowed page and pass book details
-          navigate("/borrowed", { state: { book } });
+          // Get current borrowed books from localStorage
+          const borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks") || "[]");
+      
+          // Add new book
+          localStorage.setItem("borrowedBooks", JSON.stringify([...borrowedBooks, book]));
+      
+          // Navigate
+          navigate("/borrowed");
         }
       };
+      
       
 
     if (loading) {
