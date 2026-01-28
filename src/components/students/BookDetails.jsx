@@ -35,7 +35,11 @@ const BookDetails = () => {
           alert(`You have borrowed "${book.title}"`);
       
           // Get current borrowed books from localStorage
-          const borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks") || "[]");
+          // When borrowing a book
+const borrowedBooks = JSON.parse(localStorage.getItem("borrowedBooks")) || [];
+borrowedBooks.push(book);
+localStorage.setItem("borrowedBooks", JSON.stringify(borrowedBooks));
+
       
           // Add new book
           localStorage.setItem("borrowedBooks", JSON.stringify([...borrowedBooks, book]));
