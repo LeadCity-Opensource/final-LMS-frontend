@@ -150,7 +150,7 @@ const StaffSignup = () => {
             className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
         </div>
-        
+
         <div className="w-full mb-4">
   <label className="block text-sm text-gray-700 mb-1">Phone Number:</label>
   <input
@@ -188,8 +188,8 @@ const StaffSignup = () => {
   >
     <option value="">Select designation</option>
     <option value="lecturer">Lecturer</option>
-    <option value="library staff">Library Staff</option>
-    <option value="admin">Admin</option>
+    <option value="assistant">Assistant</option>
+    <option value="librarian">Librarian</option>
   </select>
 </div>
 
