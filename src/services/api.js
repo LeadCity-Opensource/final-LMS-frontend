@@ -32,8 +32,8 @@ export const getAllBooks = () => {
 };
 
 // Search books
-export const searchBooks = (query) => {
-  return api.get(`/api/book/search?query=${query}`);
+export const searchBooks = (query = "") => {
+  return api.get(`/api/book?search=${query}`);
 };
 
 export const createBook = (bookData) => api.post("/api/book", bookData);

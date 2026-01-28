@@ -35,15 +35,12 @@ const BookSearchPage = () => {
 
   const handleSearch = async (value) => {
     setQuery(value);
-    if (!value.trim()) {
-      fetchAllBooks();
-      return;
-    }
-
+    setCurrentPage(1); // Reset page on new search
+    
     try {
       setLoading(true);
-      setError("");
-      const response = await searchBooks(value);
+      // This hits your Render backend
+      const response = await searchBooks(value); 
       setBooks(Array.isArray(response.data) ? response.data : [response.data]);
     } catch (err) {
       setError("Search failed");
@@ -77,15 +74,17 @@ console.log("FILTERED:", filteredBooks);
 console.log("PAGINATED:", paginatedResults);
 
 
-  const groupedBooks = useMemo(() => {
-    const groups = {};
-    paginatedResults.forEach((book) => {
-      const category = book.category?.trim() || "Uncategorized";
-      if (!groups[category]) groups[category] = [];
-      groups[category].push(book);
-    });
-    return groups;
-  }, [paginatedResults]);
+  // Change 'paginatedResults' to 'filteredBooks'
+const groupedBooks = useMemo(() => {
+  const groups = {};
+  // We use filteredBooks so we see ALL categories even on Page 1
+  filteredBooks.forEach((book) => {
+    const category = book.category?.trim() || "Uncategorized";
+    if (!groups[category]) groups[category] = [];
+    groups[category].push(book);
+  });
+  return groups;
+}, [filteredBooks]); // Don't forget to update the dependency here too!
 
   return (
     <div className="min-h-screen bg-[#00E5FF] font-sans">
@@ -135,10 +134,24 @@ console.log("PAGINATED:", paginatedResults);
 
       {/* Grouped Results */}
       <div className="px-4 pb-12">
-      <BookList
-  books={paginatedResults}
-  showActions={false}
-/>
+      {Object.keys(groupedBooks).length === 0 && !loading ? (
+    <p className="text-center text-black mt-10">No categories found.</p>
+  ) : (
+    Object.keys(groupedBooks).map((category) => (
+      <div key={category} className="mt-8">
+        {/* Styled Category Title */}
+        <h3 className="text-2xl font-bold text-black mb-4 border-b-2 border-blue-900 inline-block">
+          {category}
+        </h3>
+        
+        {/* Show the list for this specific category */}
+        <BookList 
+          books={groupedBooks[category]} 
+          showActions={false} 
+        />
+      </div>
+    ))
+  )}
 
 
 
