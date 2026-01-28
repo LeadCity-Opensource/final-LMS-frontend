@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Page = styled.section`
   border-radius: 0%;
@@ -152,8 +153,13 @@ const BorrowedPage = () => {
         </Left>
       </TopBar>
       <Header>
-        <strong>Borrowed Books</strong>
-      </Header>
+  <Link
+    to="/students/dashboard"
+    className="hover:underline cursor-pointer"
+  >
+    <strong>Borrowed Books</strong>
+  </Link>
+</Header>
 
       <BooksContainer>
         {borrowedBooks.map((book) => (
