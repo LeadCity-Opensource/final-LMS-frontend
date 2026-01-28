@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import SignupModal from "../components/SignupModal";
 import "./Auth.css";
-import { loginUser } from "../services/api";
+import { loginUser, setAuthToken } from "../services/api";
 
 function Login() {
 
@@ -33,13 +33,18 @@ function Login() {
   
     try {
       const response = await loginUser(formData);
-  
+
       // Save token from backend
-      localStorage.setItem("token", response.data.token);
-  
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      
+      // Set token in axios for all future requests
+      setAuthToken(token);
+      
       // Save role (optional, for app-wide access)
       const role = response.data.user.role;
       localStorage.setItem("role", role);
+      
   
       // Redirect based on role
       if (role === "student") {

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import DashboardLayout from "../layout/DashboardLayout";
+import { createBook } from "../../services/api";
+
 
 const AddBook = () => {
   const [formData, setFormData] = useState({
@@ -11,36 +13,45 @@ const AddBook = () => {
     summary: "",
   });
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newBook = {
-      id: Date.now(),
+  
+    const payload = {
       title: formData.title,
       author: formData.author,
+      isbn: formData.isbn || "N/A",
       category: "General",
-      status: "Available",
-      year: formData.year,
+      quantity: 1,
+      available: 1,
+      published_year: formData.year ? Number(formData.year) : 0,
     };
-
-    const storedBooks = JSON.parse(localStorage.getItem("books")) || [];
-    localStorage.setItem("books", JSON.stringify([...storedBooks, newBook]));
-
-    // Reset form
-    setFormData({
-      title: "",
-      isbn: "",
-      author: "",
-      year: "",
-      summary: "",
-    });
-
-    alert("Book added successfully!");
-  }
+  
+    try {
+      const token = localStorage.getItem("token"); // admin token
+      await createBook(payload, token); // call API function
+  
+      // Reset form
+      setFormData({
+        title: "",
+        isbn: "",
+        author: "",
+        year: "",
+        summary: "",
+      });
+  
+      alert("Book added successfully!");
+    } catch (err) {
+      console.error(err);
+      alert(
+        err.response?.data?.message || "Failed to add book. Are you authorized?"
+      );
+    }
+  };
+  
 
   return (
     <DashboardLayout>

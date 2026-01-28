@@ -128,12 +128,16 @@ export default function BookSearchPage() {
   const [error, setError] = useState("");  
   
 
+  useEffect(() => {
+    fetchAllBooks();
+  }, []);
+
+
   const fetchAllBooks = async () => {
     try {
       setLoading(true);
       setError(""); 
-      const response = await getAllBooks();
-      // Wrap single object in array if needed
+      const response = await getAllBooks(); // token is already set globally
       setBooks(Array.isArray(response.data) ? response.data : [response.data]);
     } catch (err) {
       setError("Failed to load books");
@@ -142,26 +146,29 @@ export default function BookSearchPage() {
     }
   };
 
+ 
+
   
   const handleSearch = async (value) => {
-    setQuery(value);
+  setQuery(value);
 
-    if (value.trim() === "") {
-      fetchAllBooks();
-      return;
-    }
-  
-    try {
-      setError("");
-      setLoading(true);
-      const response = await searchBooks(value);
-      setBooks(Array.isArray(response.data) ? response.data : [response.data]);
-    } catch (err) {
-      setError("Search failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (!value.trim()) {
+    fetchAllBooks();
+    return;
+  }
+
+  try {
+    setLoading(true);
+    setError("");
+    const response = await searchBooks(value); // token already included
+    setBooks(Array.isArray(response.data) ? response.data : [response.data]);
+  } catch (err) {
+    setError("Search failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
   
   
   const groupedBooks = useMemo(() => {

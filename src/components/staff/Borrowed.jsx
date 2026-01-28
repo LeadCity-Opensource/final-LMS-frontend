@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Page = styled.section`
   border-radius: 0%;
@@ -119,6 +121,29 @@ const DueText = styled.div`
 `;
 
 const BorrowedPage = () => {
+  const location = useLocation();
+  const borrowedBook = location.state?.book; // Get book from navigation
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+
+  // Add book from navigation to borrowedBooks
+  useEffect(() => {
+    if (borrowedBook) {
+      setBorrowedBooks((prev) => {
+        // Avoid duplicates
+        if (prev.find((b) => b.id === borrowedBook.id)) return prev;
+        return [...prev, borrowedBook];
+      });
+    }
+  }, [borrowedBook]);
+
+  if (borrowedBooks.length === 0) {
+    return (
+      <Page>
+        <Header>No borrowed books yet.</Header>
+      </Page>
+    );
+  }
+
   return (
     <Page>
       <TopBar>
@@ -131,74 +156,24 @@ const BorrowedPage = () => {
       </Header>
 
       <BooksContainer>
-        {/* Book 1 */}
-        <BookCard>
-          <BookMain>
-            <BookImage src="/Rectangle 37.png" alt="Book" />
-
-            <BookDetails>
-              <BookTitle>
-                <strong>A lorem ipsum dolor sit amet.</strong>
-              </BookTitle>
-            </BookDetails>
-          </BookMain>
-          <DueWrapper>
-            <DueText>
-              Due <span>3</span>
-            </DueText>
-          </DueWrapper>
-        </BookCard>
-        {/* Book 2 */}
-        <BookCard>
-          <BookMain>
-            <BookImage src="/Rectangle 37.png" alt="Book" />
-
-            <BookDetails>
-              <BookTitle>
-                <strong>A lorem ipsum dolor sit amet.</strong>
-              </BookTitle>
-            </BookDetails>
-          </BookMain>
-          <DueWrapper>
-            <DueText>
-              Due <span>4</span>
-            </DueText>
-          </DueWrapper>
-        </BookCard>
-        {/* Book 3 */}
-        <BookCard>
-          <BookMain>
-            <BookImage src="/Rectangle 37.png" alt="Book" />
-
-            <BookDetails>
-              <BookTitle>
-                <strong>A lorem ipsum dolor sit amet.</strong>
-              </BookTitle>
-            </BookDetails>
-          </BookMain>
-          <DueWrapper>
-            <DueText>
-              Due <span>5</span>
-            </DueText>
-          </DueWrapper>
-        </BookCard>
-        {/* Book 4 */}
-        <BookCard>
-          <BookMain>
-            <BookImage src="/Rectangle 37.png" alt="Book" />
-
-            <BookDetails>
-              <BookTitle>
-                <strong>A lorem ipsum dolor sit amet.</strong>
-              </BookTitle>
-            </BookDetails>
-          </BookMain>
-          <DueWrapper>
-            <DueText>
-              Due <span>2</span>
-            </DueText>
-          </DueWrapper>
-        </BookCard>
+        {borrowedBooks.map((book) => (
+          <BookCard key={book.id}>
+            <BookMain>
+              <BookImage src={book.cover || "/Rectangle 37.png"} alt={book.title} />
+              <BookDetails>
+                <BookTitle>
+                  <strong>{book.title}</strong>
+                </BookTitle>
+                <p>{book.author}</p>
+              </BookDetails>
+            </BookMain>
+            <DueWrapper>
+              <DueText>
+                Due <span>7</span> {/* You can calculate due dates dynamically later */}
+              </DueText>
+            </DueWrapper>
+          </BookCard>
+        ))}
       </BooksContainer>
     </Page>
   );

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import DashboardLayout from "../layout/DashboardLayout";
 import initialBooks from "../../mockdata/Books";
+import { deleteBook as apiDeleteBook } from "../../services/api";
+
 
 function Operation() {
 const [books, setBooks] = useState(() => {
@@ -15,12 +17,23 @@ const [books, setBooks] = useState(() => {
   );
 
   // Confirm delete
- const confirmDelete = () => {
-  const updated = books.filter((b) => b.id !== deleteBook.id);
-  setBooks(updated);
-  localStorage.setItem("books", JSON.stringify(updated));
-  setDeleteBook(null);
-};
+  const confirmDelete = async () => {
+    try {
+      const token = localStorage.getItem("token"); // admin token
+      await apiDeleteBook(deleteBook.id, token);
+  
+      // Remove book from state after successful deletion
+      const updated = books.filter((b) => b.id !== deleteBook.id);
+      setBooks(updated);
+      setDeleteBook(null);
+    } catch (err) {
+      console.error(err);
+      alert(
+        err.response?.data?.message || "Failed to delete book. Are you authorized?"
+      );
+    }
+  };
+  
 
 
   return (

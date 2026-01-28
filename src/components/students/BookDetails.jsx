@@ -1,22 +1,52 @@
 import { useParams, useNavigate } from "react-router-dom";
-import Books from "../../mockdata/Books";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getBookDetails } from "../../services/api"; // import your API function
 import Logo from "../../Images/book_details_logo.png";
 
 const BookDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const book = Books.find((b) => b.id === parseInt(id));
+    const [book, setBook] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    // Fetch book details from API
+    useEffect(() => {
+        async function fetchBook() {
+            try {
+                const response = await getBookDetails(id);
+                setBook(response.data); // store backend data
+            } catch (error) {
+                console.error("Failed to fetch book details:", error);
+                setBook(null);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchBook();
+    }, [id]);
 
     // Placeholder function for borrow action
     const [isBorrowed, setIsBorrowed] = useState(false);
 
     const handleBorrow = () => {
         if (book.available && !isBorrowed) {
-            setIsBorrowed(true);
-            alert(`You have borrowed "${book.title}"`);
+          setIsBorrowed(true);
+          alert(`You have borrowed "${book.title}"`);
+      
+          // Navigate to borrowed page and pass book details
+          navigate("/borrowed", { state: { book } });
         }
-    };
+      };
+      
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen text-gray-500 text-lg">
+                Loading book details...
+            </div>
+        );
+    }
 
     if (!book) {
         return (
