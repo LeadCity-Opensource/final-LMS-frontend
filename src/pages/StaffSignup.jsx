@@ -13,7 +13,7 @@ const StaffSignup = () => {
     designation: "",
     idNumber: "",
     email: "",
-    role: "",
+
     password: "",
     confirmPassword: "",
 
@@ -36,12 +36,12 @@ const StaffSignup = () => {
     // 1️⃣ Validation
     if (
       !formData.firstName ||
-      !formData.lastName ||
-      !formData.designation ||
-      !formData.idNumber ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword
+  !formData.lastName ||
+  !formData.designation ||
+  !formData.idNumber ||
+  !formData.email ||
+  !formData.password ||
+  !formData.confirmPassword
     ) {
       setError("All fields are required.");
       return;
@@ -65,7 +65,7 @@ const StaffSignup = () => {
       staffId: formData.idNumber,
       email: formData.email,
       password: formData.password,
-      
+
     };
     
     
@@ -181,7 +181,7 @@ const StaffSignup = () => {
     <option value="">Select designation</option>
     <option value="librarian">Librarian</option>
     <option value="library staff">Library Staff</option>
-    <option value="admin assistant">Admin Assistant</option>
+    <option value="admin">Admin</option>
   </select>
 </div>
 
