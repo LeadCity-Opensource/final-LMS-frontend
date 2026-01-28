@@ -20,7 +20,7 @@ import AddBook from "./components/staff/AddBook";
 import StudentsDashboard from "./components/students/StudentsDashboard";
 // import StaffDashboard from "./components/students/StaffDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
-
+import BookList from "./components/staff/BookList";
 
 const App = () => {
   return (
@@ -67,6 +67,7 @@ const App = () => {
   <Route path="/borrowers" element={<Borrowers />} />
   <Route path="/header" element={<Header />} />
   <Route path="/addbooks" element={<AddBook />} />
+  <Route path="/booklist" element={<BookList />} />
   <Route path="/bookdetails/:id" element={<BookDetails />} />
   <Route
   path="/students/dashboard"

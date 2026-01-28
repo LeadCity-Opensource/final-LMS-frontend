@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { getAllBooks, searchBooks } from "../../services/api";
 import logoImage from "../../Images/School Logo.png";
 import backgroundImage from "../../Images/Background.png";
+import BookList from "../staff/BookList";
+
+
 
 const ITEMS_PER_PAGE = 6;
 
@@ -128,39 +131,12 @@ const BookSearchPage = () => {
 
       {/* Grouped Results */}
       <div className="px-4 pb-12">
-        {Object.keys(groupedBooks).length > 0 ? (
-          Object.keys(groupedBooks)
-            .sort()
-            .map((category) => (
-              <div key={category} className="mb-10">
-                <h2 className="text-3xl font-bold text-white px-2 mb-4">
-                  {category}
-                </h2>
-                {groupedBooks[category].map((book) => (
-                  <div
-                    key={book.id}
-                    className="flex justify-between items-end py-4 border-b border-gray-400/40 px-2"
-                  >
-                    <div>
-                      <h3 className="text-lg font-bold text-red-900 underline cursor-pointer">
-                        <Link to={`/bookdetails/${book.id}`}>
-                          {book.title}
-                        </Link>
-                      </h3>
-                      <p className="text-sm text-black italic">{book.author}</p>
-                    </div>
-                    <p className="text-sm font-bold text-black">
-                      Available ({book.available})
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ))
-        ) : (
-          <div className="text-center mt-20 text-black/50 font-medium">
-            No books available
-          </div>
-        )}
+      <BookList
+  books={paginatedResults}
+  showActions={false}
+/>
+
+
 
         {/* Pagination */}
         {totalPages > 1 && (
