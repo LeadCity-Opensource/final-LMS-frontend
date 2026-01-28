@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import "./StudentsDashboard.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -15,6 +15,7 @@ const books = [
 
 function StudentsDashboard() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="student-dashboard">
@@ -46,7 +47,17 @@ function StudentsDashboard() {
           <li>Help</li>
         </ul>
 
-        <button className="logout">Log Out</button>
+        <button
+  className="logout"
+  onClick={() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/login");
+  }}
+>
+  Log Out
+</button>
+
       </div>
 
       {/* Top Bar */}
