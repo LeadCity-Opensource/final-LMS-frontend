@@ -35,24 +35,21 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Logout function
   const handleLogout = () => {
-
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    navigate("/login"); // this should work if inside Router
+    navigate("/login");
   };
-  
-  
+
   // GSAP slide animation
   useEffect(() => {
     if (!sidebarRef.current || !overlayRef.current) return;
 
     if (isDesktop) {
-      // Always show sidebar on desktop
       gsap.set(sidebarRef.current, { x: 0 });
       gsap.set(overlayRef.current, { opacity: 0, pointerEvents: "none" });
     } else {
-      // Mobile: slide and overlay
       gsap.to(sidebarRef.current, {
         x: open ? 0 : "-100%",
         duration: 0.4,
@@ -69,7 +66,7 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
 
   // Swipe-to-close for mobile
   useEffect(() => {
-    if (isDesktop) return; // skip on desktop
+    if (isDesktop) return;
 
     const sidebar = sidebarRef.current;
     if (!sidebar) return;
@@ -95,9 +92,7 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
     };
   }, [onClose, isDesktop]);
 
-    
-
-  // Persist avatar in localStorage
+  // Load avatar from localStorage
   useEffect(() => {
     const storedAvatar = localStorage.getItem("userAvatar");
     if (storedAvatar) setAvatar(storedAvatar);
@@ -129,79 +124,71 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
       {/* Sidebar */}
       <aside
         ref={sidebarRef}
-        className="fixed top-0 left-0 z-50 h-full w-64 bg-blue-400  text-white"
+        className="fixed top-0 left-0 z-50 h-full w-64 bg-blue-400 text-white flex flex-col justify-between"
       >
-        {/* Header */}
-        <div className="p-4 text-xl font-bold ">Library Dashboard</div>
+        {/* Top Section */}
+        <div>
+          <div className="p-4 text-xl font-bold">Library Dashboard</div>
 
-         {/* User Avatar */}
-        <div className="flex items-center gap-2 mb-8 px-4">
-          <div
-            className="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold cursor-pointer overflow-hidden"
-            onClick={handleAvatarClick}
-          >
-            {avatar ? (
-              <img
-                src={avatar}
-                alt="User Avatar"
-                className="w-full h-full object-cover"
+          {/* Avatar */}
+          <div className="flex items-center gap-2 mb-8 px-4">
+            <div
+              className="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold cursor-pointer overflow-hidden"
+              onClick={handleAvatarClick}
+            >
+              {avatar ? (
+                <img
+                  src={avatar}
+                  alt="User Avatar"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                user?.name?.[0] || "U"
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleAvatarChange}
+                className="hidden"
               />
-            ) : (
-              user?.name?.[0] || "U"
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={handleAvatarChange}
-              className="hidden"
-            />
+            </div>
+
+            <div className="flex flex-col text-white text-sm">
+              <p className="font-semibold">{user?.name || "User"}</p>
+              <p className="text-xs">{user?.email || "user@example.com"}</p>
+            </div>
           </div>
 
-          {/* Name + Email */}
-          <div className=" sm:flex flex-col text-white text-sm">
-            <p className="font-semibold">{user?.name || "User"}</p>
-            <p className="text-xs">{user?.email || "user@example.com"}</p>
-          </div>
+          {/* Menu */}
+          <nav className="px-4 space-y-1">
+            {menu[role].map(({ name, path, icon: Icon }) => (
+              <NavLink
+                key={name}
+                to={path}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-2 rounded ${
+                    isActive ? "bg-red-600" : "hover:bg-gray-700"
+                  }`
+                }
+              >
+                <Icon size={18} />
+                {name}
+              </NavLink>
+            ))}
+          </nav>
         </div>
 
-        {/* Menu */}
-        <nav className="px-4 space-y-1">
-          {menu[role].map(({ name, path, icon: Icon }) => (
-            <NavLink
-              key={name}
-              to={path}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `flex items-center gap-3 p-2 rounded ${
-                  isActive ? "bg-red-600" : "hover:bg-gray-700"
-                }`
-              }
-            >
-              <Icon size={18} />
-              {name}
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Bottom Logout */}
-        <div className="absolute bottom-4 px-4 w-full z-50">
-        <button
-  onClick={() => {
-    console.log("Logout clicked");
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    navigate("/login");
-  }}
-  className="flex items-center gap-2 bg-red-700 text-white p-2 rounded hover:bg-red-800 transition cursor-pointer"
->
-  <LogOut size={18} /> Logout
-</button>
-
-
-
-</div>
-
+        {/* Logout Section */}
+        <div className="p-4">
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 bg-red-700 text-white p-2 rounded hover:bg-red-800 transition cursor-pointer w-full"
+          >
+            <LogOut size={18} /> Logout
+          </button>
+        </div>
       </aside>
     </>
   );
