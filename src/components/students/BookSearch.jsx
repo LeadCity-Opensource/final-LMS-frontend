@@ -117,6 +117,7 @@ import {  useMemo, } from "react";
 import logoImage from "../../Images/School Logo.png";
 import backgroundImage from "../../Images/Background.png";
 import { getAllBooks, searchBooks } from "../../services/api";
+import { Link } from "react-router-dom";
 
 
 
@@ -256,11 +257,11 @@ export default function BookSearchPage() {
           className="flex justify-between items-end py-4 border-b border-gray-400/40 px-2"
         >
           <div>
-            <h3 
-            onClick={() => navigate(`/bookdetails/${book.id}`)}
-             className="text-lg font-bold text-red-900 underline cursor-pointer">
-              {book.title}
-            </h3>
+          <h3 className="text-lg font-bold text-red-900 underline cursor-pointer">
+  <Link to={`/bookdetails/${book.id}`}>
+    {book.title}
+  </Link>
+</h3>
             <p className="text-sm text-black italic">
               {book.author}
             </p>
