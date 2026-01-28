@@ -2,18 +2,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminCreateUser } from "../services/api";
 
-const AdminCreateUser = () => {
+
+
+const StaffSignup = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     designation: "",
     idNumber: "",
     email: "",
+    role: "",
     password: "",
     confirmPassword: "",
-    role: "staff", // default role
+
   });
+  
 
   const [error, setError] = useState("");
 
@@ -27,62 +32,220 @@ const AdminCreateUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-  
-    const { firstName, lastName, designation, idNumber, email, password, confirmPassword, role } = formData;
-  
-    // ✅ Validation
-    if (!firstName || !lastName || !designation || !idNumber || !email || !password || !confirmPassword) {
+
+    // 1️⃣ Validation
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.designation ||
+      !formData.idNumber ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       setError("All fields are required.");
       return;
     }
-  
-    if (password !== confirmPassword) {
+
+    if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
-  
-    if (password.length < 6) {
+
+    if (formData.password.length < 6) {
       setError("Password must be at least 6 characters long.");
       return;
     }
-  
-    // ✅ Payload
-    const payload = { firstName, lastName, designation, idNumber, email, password, role };
 
+    // 2️⃣ Payload sent to backend
+    const payload = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      designation: formData.designation,
+      idNumber: formData.idNumber,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role, 
+    };
+    
+
+    // 3️⃣ API call
     try {
-      await adminCreateUser(payload);
-      alert("User created successfully!");
-      navigate("/login"); // ✅ Navigate to login page
+      const response = await adminCreateUser(payload);
+
+
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+      }
+
+      navigate("/login");
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to create user. Please try again.");
+      setError(
+        err.response?.data?.message ||
+          "Staff signup failed. Please try again."
+      );
     }
   };
-  
 
   return (
-    <div className="flex items-center justify-center min-h-screen relative">
-      <form onSubmit={handleSubmit} className="relative z-10 w-full max-w-md flex flex-col items-center px-6">
-        <img src="/logo.png" alt="Logo" className="mb-6 w-40 h-40 object-contain" />
+    <div className="flex items-center justify-center min-h-screen overflow-hidden relative">
+      {/* Background semi-circle */}
+      <div className="absolute inset-0">
+        <div className="absolute bottom-0 left-0 right-0 h-[90%] bg-sky-300 rounded-t-[50%]" />
+      </div>
 
-        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+      <form
+        onSubmit={handleSubmit}
+        className="relative z-10 w-full max-w-md flex flex-col items-center px-6"
+      >
+        <img
+          src="/logo.png"
+          alt="Library Logo"
+          className="mb-6 w-40 h-40 object-contain"
+        />
+
+        {error && (
+          <div className="text-red-500 text-sm mb-4">{error}</div>
+        )}
 
         <div className="w-full mb-4 flex gap-4">
-          <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border focus:ring-2 focus:ring-sky-400" />
-          <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border focus:ring-2 focus:ring-sky-400" />
+          <div className="flex-1">
+            <label className="block text-sm text-gray-700 mb-1">
+              First Name:
+            </label>
+            <input
+              type="text"
+              name="firstName"
+              placeholder="John"
+              required
+              value={formData.firstName}
+              onChange={handleChange}
+              className="w-full px-5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white"
+            />
+          </div>
+
+          <div className="flex-1">
+            <label className="block text-sm text-gray-700 mb-1">
+              Last Name:
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Doe"
+              required
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full px-5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white"
+            />
+          </div>
         </div>
 
-        <input type="text" name="idNumber" placeholder="ID Number" value={formData.idNumber} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border mb-4 focus:ring-2 focus:ring-sky-400" />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border mb-4 focus:ring-2 focus:ring-sky-400" />
-        <input type="text" name="designation" placeholder="Designation" value={formData.designation} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border mb-4 focus:ring-2 focus:ring-sky-400" />
-        <input type="text" name="role" placeholder="Role" value={formData.role} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border mb-4 focus:ring-2 focus:ring-sky-400" />
+        <div className="md:w-full mb-4">
+          <label className="block text-sm text-gray-700 mb-1">
+            Staff ID Number:
+          </label>
+          <input
+            type="text"
+            name="idNumber"
+            placeholder="STF12345"
+            required
+            value={formData.idNumber}
+            onChange={handleChange}
+            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+          />
+        </div>
 
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border mb-4 focus:ring-2 focus:ring-sky-400" />
-        <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} className="w-full px-5 py-3 rounded-lg border mb-6 focus:ring-2 focus:ring-sky-400" />
+        <div className="md:w-full mb-4">
+          <label className="block text-sm text-gray-700 mb-1">Email:</label>
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="staff@example.com"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+          />
+        </div>
 
-        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full mb-4">Create User</button>
+        <div className="md:w-full mb-4">
+          <label className="block text-sm text-gray-700 mb-1">
+            Designation
+          </label>
+          <input
+            type="text"
+            name="designation"
+            required
+            placeholder="library staff"
+            value={formData.designation}
+            onChange={handleChange}
+            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+          />
+        </div>
+
+        <div className="md:w-full mb-4">
+          <label className="block text-sm text-gray-700 mb-1">
+            Role
+          </label>
+          <input
+            type="text"
+            name="role"
+            required
+            placeholder="admin"
+            value={formData.role}
+            onChange={handleChange}
+            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+          />
+        </div>
+
+        <div className="md:w-full mb-4">
+          <label className="block text-sm text-gray-700 mb-1">Password:</label>
+          <input
+            type="password"
+            name="password"
+            required
+            placeholder="Min 6 characters"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+          />
+        </div>
+
+        <div className="md:w-full mb-6">
+          <label className="block text-sm text-gray-700 mb-1">
+            Confirm Password:
+          </label>
+          <input
+            type="password"
+            name="confirmPassword"
+            required
+            placeholder="Re-enter password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-55 md:w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full transition duration-300 mb-4"
+        >
+          Sign Up
+        </button>
+
+        <p className="text-sm text-gray-700">
+          Already have an account?{" "}
+          <button
+            type="button"
+            onClick={() => navigate("/login")}
+            className="text-white font-semibold cursor-pointer hover:underline"
+          >
+            Sign in
+          </button>
+        </p>
       </form>
     </div>
   );
 };
 
-export default AdminCreateUser;
+export default StaffSignup;

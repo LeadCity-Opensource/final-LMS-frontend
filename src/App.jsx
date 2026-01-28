@@ -18,7 +18,9 @@ import MessageCard from "./pages/MessageCard";
 import AdminDashboard from "./components/AdminDashboard";
 import AddBook from "./components/staff/AddBook";
 import StudentsDashboard from "./components/students/StudentsDashboard";
-import StaffDashboard from "./components/students/StaffDashboard";
+// import StaffDashboard from "./components/students/StaffDashboard";
+import ProtectedRoute from "./routes/ProtectedRoute";
+
 
 const App = () => {
   return (
@@ -43,8 +45,14 @@ const App = () => {
       </Routes> */}
 <Routes>
   <Route path="/messagecard/:borrowId" element={<MessageCard />} />
-  <Route path="/admindashboard" element={<AdminDashboard />} />
-  <Route path="/addbooks" element={<AddBook />} />
+  <Route
+  path="/admindashboard"
+  element={
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <AdminDashboard />
+    </ProtectedRoute>
+  }
+/>
   <Route path="/" element={<LandingPage />} />
   <Route path="/signup/student" element={<StudentSignup />} />
   <Route path="/signup/staff" element={<StaffSignup />} />
@@ -58,9 +66,17 @@ const App = () => {
   <Route path="/borrowed" element={<Borrowed />} />
   <Route path="/borrowers" element={<Borrowers />} />
   <Route path="/header" element={<Header />} />
+  <Route path="/addbooks" element={<AddBook />} />
   <Route path="/bookdetails/:id" element={<BookDetails />} />
-  <Route path="/students/dashboard" element={<StudentsDashboard />} />
-  <Route path="/staff/dashboard" element={<StaffDashboard />} />
+  <Route
+  path="/students/dashboard"
+  element={
+    <ProtectedRoute allowedRoles={["student"]}>
+      <StudentsDashboard />
+    </ProtectedRoute>
+  }
+/>
+  {/* <Route path="/staff/dashboard" element={<StaffDashboard />} /> */}
 </Routes>
     </>
   );

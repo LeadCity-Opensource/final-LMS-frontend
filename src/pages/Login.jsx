@@ -1,16 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/api";
+import { Eye, EyeOff } from "lucide-react";
+import SignupModal from "../components/SignupModal";
+import "./Auth.css";
+import { loginUser, } from "../services/api";
 
-const Login = () => {
-  const navigate = useNavigate();
+function Login() {
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -21,64 +30,118 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (!formData.email || !formData.password) {
-      setError("Email and password are required.");
-      return;
-    }
-
+  
     try {
-      const response = await login(formData);
-
-      // Save token
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
-
-      // Role-based navigation
-      const role = response.data.user.role;
+      const response = await loginUser(formData);
+  
+      const token = response.data.token;
+      const role = response.data.role;
+  
+      // save auth data
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+  
+      // role-based navigation
       if (role === "admin") {
-        navigate("/admin-dashboard"); // admin page
+        navigate("/admin/dashboard");
       } else if (role === "staff") {
-        navigate("/staff-dashboard"); // staff page
+        navigate("/admindashboard");
+      } else if (role === "student") {
+        navigate("/students/dashboard");
       } else {
-        navigate("/"); // fallback
+        // fallback
+        navigate("/login");
       }
+  
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+      setError(
+        err.response?.data?.message ||
+        err.message ||
+        "Login failed"
+      );
     }
   };
+  
+  
+  
+
+
+
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col gap-4 p-6 border rounded-lg">
-        <h2 className="text-2xl font-bold text-center">Login</h2>
+    <div className="flex items-center justify-center min-h-screen overflow-hidden relative">
+      <div className="absolute inset-0">
+        <div className="absolute bottom-0 left-0 right-0 h-[75%] bg-sky-300 rounded-t-[50%]"></div>
+      </div>
 
-        {error && <div className="text-red-500">{error}</div>}
+      <div className="relative z-10 w-full max-w-md flex flex-col items-center px-6">
+        <img
+          src="/logo.png"
+          alt="School Logo"
+          className="mb-6 w-40 h-40 object-contain"
+        />
+
+{error && <p className="error-text">{error}</p>}
+
+
+        <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded"
+          required
+          className="w-full mb-5 px-5 py-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-sky-400 bg-white"
         />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded"
-        />
+        <div className="relative w-full mb-8">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-5 py-3 pr-12 rounded-lg border 
+               focus:outline-none focus:ring-2 focus:ring-sky-400
+                text-gray-900 placeholder-gray-400  bg-white"
+          />
 
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-4 flex items-center
+               text-gray-400  focus:outline-none"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
+
+        <button
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full transition duration-300 mb-4"
+          type="submit"
+          
+        >
           Login
         </button>
-      </form>
+
+        </form>
+
+        <p className="text-sm text-gray-700">
+          Don't have an account?{" "}
+          <span
+            onClick={() => setIsModalOpen(true)}
+            className="text-white font-semibold cursor-pointer"
+          >
+            Sign up
+          </span>
+        </p>
+      </div>
+
+      <SignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
-};
+}
 
 export default Login;

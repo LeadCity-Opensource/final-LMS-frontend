@@ -23,7 +23,7 @@ export const studentSignup = (data) => {
   return api.post("/api/auth/student-signup", data);
 };
 
-// services/api.js
+
 export const adminCreateUser = (data) => {
   return api.post("/api/admin/create-user", data);
 };
