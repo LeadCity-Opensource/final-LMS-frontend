@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import SignupModal from "../components/SignupModal";
 import "./Auth.css";
-import { loginUser, setAuthToken } from "../services/api";
+import { loginUser, } from "../services/api";
 
 function Login() {
 
