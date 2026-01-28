@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getBookDetails } from "../../services/api"; // import your API function
+import { getBookDetails } from "../../services/api"; 
 import Logo from "../../Images/book_details_logo.png";
 
 const BookDetails = () => {

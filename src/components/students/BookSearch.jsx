@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import mockBooks from "../students/BookSearch/mockBooks";
 import BookSearchResults from "../students/BookSearchResults";
 import DashboardLayout from "../layout/DashboardLayout";
-import BookDetails from "./BookDetails";
+
 
 const ITEMS_PER_PAGE = 6;
 
