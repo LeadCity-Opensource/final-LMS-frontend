@@ -65,8 +65,9 @@ const StaffSignup = () => {
       staffId: formData.idNumber,
       email: formData.email,
       password: formData.password,
-      role: formData.role, 
+      
     };
+    
     
 
     // 3️⃣ API call
@@ -91,7 +92,7 @@ const StaffSignup = () => {
     <div className="flex items-center justify-center min-h-screen overflow-hidden relative">
       {/* Background semi-circle */}
       <div className="absolute inset-0">
-        <div className="absolute bottom-0 left-0 right-0 h-[90%] bg-sky-300 rounded-t-[50%]" />
+        <div className="absolute bottom-0 left-0 right-0 h-[90%] bg-sky-300 rounded-t-[25%]" />
       </div>
 
       <form
@@ -140,7 +141,7 @@ const StaffSignup = () => {
           </div>
         </div>
 
-        <div className="md:w-full mb-4">
+        <div className="w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">
             Staff ID Number:
           </label>
@@ -155,7 +156,7 @@ const StaffSignup = () => {
           />
         </div>
 
-        <div className="md:w-full mb-4">
+        <div className="w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Email:</label>
           <input
             type="email"
@@ -168,37 +169,25 @@ const StaffSignup = () => {
           />
         </div>
 
-        <div className="md:w-full mb-4">
-          <label className="block text-sm text-gray-700 mb-1">
-            Designation
-          </label>
-          <input
-            type="text"
-            name="designation"
-            required
-            placeholder="library staff"
-            value={formData.designation}
-            onChange={handleChange}
-            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
-          />
-        </div>
+        <div className="w-full mb-4">
+  <label className="block text-sm text-gray-700 mb-1">Designation</label>
+  <select
+    name="designation"
+    required
+    value={formData.designation}
+    onChange={handleChange}
+    className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+  >
+    <option value="">Select designation</option>
+    <option value="librarian">Librarian</option>
+    <option value="library staff">Library Staff</option>
+    <option value="admin assistant">Admin Assistant</option>
+  </select>
+</div>
 
-        <div className="md:w-full mb-4">
-          <label className="block text-sm text-gray-700 mb-1">
-            Role
-          </label>
-          <input
-            type="text"
-            name="role"
-            required
-            placeholder="admin"
-            value={formData.role}
-            onChange={handleChange}
-            className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
-          />
-        </div>
 
-        <div className="md:w-full mb-4">
+        
+        <div className="w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Password:</label>
           <input
             type="password"
@@ -211,7 +200,7 @@ const StaffSignup = () => {
           />
         </div>
 
-        <div className="md:w-full mb-6">
+        <div className="w-full mb-6">
           <label className="block text-sm text-gray-700 mb-1">
             Confirm Password:
           </label>

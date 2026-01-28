@@ -94,7 +94,7 @@ const StudentSignup = () => {
     <div className="flex items-center justify-center relative">
       {/* Background semi-circle */}
       <div className="absolute inset-0">
-        <div className="absolute bottom-0 left-0 right-0 h-[95%] bg-sky-300 rounded-t-[50%]"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-[95%] bg-sky-300 rounded-t-[25%]"></div>
       </div>
 
       <form
@@ -109,8 +109,8 @@ const StudentSignup = () => {
 
         {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
 
-        <div className="md:w-full mb-4">
-          <label className="block text-sm text-gray-700 mb-1">Full Name:</label>
+        <div className="w-full mb-4">
+         
           <div className="w-full mb-4 flex gap-4">
             <div className="flex-1">
               <label className="block text-sm text-gray-700 mb-1">First Name:</label>
@@ -152,8 +152,8 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="md:w-full mb-4">
-          
+        <div className="w-full mb-4">
+
           <label className="block text-sm text-gray-700 mb-1">Matric Number:</label>
           <input
             type="text"
@@ -166,8 +166,8 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="md:w-full mb-4">
-          <label className="block text-sm text-gray-700 mb-1">Course:</label>
+        <div className="w-full mb-4">
+        
           <div className="w-full mb-4 flex gap-4">
             <div className="flex-1">
               <label className="block text-sm text-gray-700 mb-1">Entry Year:</label>
@@ -222,7 +222,7 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="md:w-full mb-4">
+        <div className="w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Email:</label>
           <input
             type="email"
@@ -235,7 +235,7 @@ const StudentSignup = () => {
           />
         </div>
 
-        <div className="md:w-full mb-4">
+        <div className="w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Password:</label>
           <div className="relative">
             <input
@@ -258,7 +258,7 @@ const StudentSignup = () => {
           </div>
         </div>
 
-        <div className="md:w-full mb-6">
+        <div className="w-full mb-6">
           <label className="block text-sm text-gray-700 mb-1">Confirm Password:</label>
           <div className="relative">
             <input
