@@ -31,24 +31,21 @@ const BookDetails = () => {
 
     const handleBorrow = () => {
         if (!book.available || isBorrowed) return;
-      
-        // Get current user (student or staff)
+    
         const user = JSON.parse(localStorage.getItem("user")) || {
           name: "Unknown User",
           email: "unknown@email.com",
-          role: "staff",
+          role: "student", // default to student
         };
-      
-        // Load existing borrowers list
+    
         const borrowers = JSON.parse(localStorage.getItem("borrowers")) || [];
-      
+    
         const borrowedAt = new Date();
         const dueDate = new Date();
-        dueDate.setDate(dueDate.getDate() + 7); // 7 days loan period
-      
-        // Create new borrow record
+        dueDate.setDate(dueDate.getDate() + 7);
+    
         const newBorrow = {
-          borrowId: Date.now(), // unique ID
+          borrowId: Date.now(),
           user: {
             name: user.name,
             email: user.email,
@@ -62,22 +59,27 @@ const BookDetails = () => {
           borrowedAt: borrowedAt.toISOString(),
           dueDate: dueDate.toISOString(),
           status: "borrowed",
-          type: "due", // default type
+          type: "due",
         };
-      
+    
         borrowers.push(newBorrow);
-      
-        // Save back to localStorage
+
         localStorage.setItem("borrowers", JSON.stringify(borrowers));
-      
-        // Mark as borrowed in this session
+
         setIsBorrowed(true);
-      
+    
         alert(`"${book.title}" borrowed successfully`);
-      
-        // Navigate to Borrowers page
-        navigate("/borrowers");
-      };      
+    
+        // ✅ Role-based navigation
+        if (user.role === "admin") {
+            navigate("/borrowers"); // admins see all borrowers
+        } else if (user.role === "student") {
+            navigate("/borrowed"); // students see their borrowed books
+        } else {
+            navigate("/"); // fallback
+        }
+    };
+         
       
       
       

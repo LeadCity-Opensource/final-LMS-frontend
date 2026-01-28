@@ -62,7 +62,7 @@ const StaffSignup = () => {
       firstName: formData.firstName,
       lastName: formData.lastName,
       designation: formData.designation,
-      idNumber: formData.idNumber,
+      staffId: formData.idNumber,
       email: formData.email,
       password: formData.password,
       role: formData.role, 
@@ -146,7 +146,7 @@ const StaffSignup = () => {
           </label>
           <input
             type="text"
-            name="idNumber"
+            name="staffId"
             placeholder="STF12345"
             required
             value={formData.idNumber}
