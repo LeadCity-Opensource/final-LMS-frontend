@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { adminCreateUser } from "../services/api";
+import { staffSignup } from "../services/api";
 
 
 
@@ -13,11 +13,12 @@ const StaffSignup = () => {
     designation: "",
     idNumber: "",
     email: "",
-
+    phoneNumber: "", // <-- add this
     password: "",
     confirmPassword: "",
 
   });
+  
   
 
   const [error, setError] = useState("");
@@ -40,6 +41,7 @@ const StaffSignup = () => {
   !formData.designation ||
   !formData.idNumber ||
   !formData.email ||
+  !formData.phoneNumber ||
   !formData.password ||
   !formData.confirmPassword
     ) {
@@ -72,18 +74,11 @@ const StaffSignup = () => {
 
     // 3️⃣ API call
     try {
-      const response = await adminCreateUser(payload);
-
-
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
-
+      await staffSignup(payload);
       navigate("/login");
     } catch (err) {
       setError(
-        err.response?.data?.message ||
-          "Staff signup failed. Please try again."
+        err.response?.data?.message || "Staff signup failed. Please try again."
       );
     }
   };
@@ -155,6 +150,19 @@ const StaffSignup = () => {
             className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
         </div>
+        
+        <div className="w-full mb-4">
+  <label className="block text-sm text-gray-700 mb-1">Phone Number:</label>
+  <input
+    type="text"
+    name="phoneNumber"
+    placeholder="+2348012345678"
+    required
+    value={formData.phoneNumber}
+    onChange={handleChange}
+    className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
+  />
+</div>
 
         <div className="w-full mb-4">
           <label className="block text-sm text-gray-700 mb-1">Email:</label>
@@ -179,7 +187,7 @@ const StaffSignup = () => {
     className="w-full px-5 py-3 rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-400"
   >
     <option value="">Select designation</option>
-    <option value="librarian">Librarian</option>
+    <option value="lecturer">Lecturer</option>
     <option value="library staff">Library Staff</option>
     <option value="admin">Admin</option>
   </select>

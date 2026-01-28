@@ -43,7 +43,7 @@ function Login() {
   
       // role-based navigation
       if (role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admindashboard");
       } else if (role === "staff") {
         navigate("/admindashboard");
       } else if (role === "student") {
