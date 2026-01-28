@@ -42,18 +42,12 @@ function Login() {
       setAuthToken(token);
       
       // Save role (optional, for app-wide access)
-      const role = response.data.user.role;
+      const role = response.data.role;
       localStorage.setItem("role", role);
       
+      setAuthToken(token);
   
-      // Redirect based on role
-      if (role === "student") {
-        navigate("/students/dashboard");
-      } else if (role === "staff") {
-        navigate("/staff/dashboard");
-      } else {
-        setError("Unknown user role");
-      }
+      navigate("/students/dashboard"); 
   
     } catch (err) {
       setError(err.response?.data?.message || "Invalid login details");
