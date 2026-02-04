@@ -48,14 +48,14 @@ const App = () => {
   <Route
   path="/admindashboard"
   element={
-    <ProtectedRoute allowedRoles={["admin"]}>
+    <ProtectedRoute allowedRoles={["admin", "staff"]}>
       <AdminDashboard />
     </ProtectedRoute>
   }
 />
   <Route path="/" element={<LandingPage />} />
   <Route path="/signup/student" element={<StudentSignup />} />
-  <Route path="/signup/staff" element={<StaffSignup />} />
+  {/* <Route path="/signup/staff" element={<StaffSignup />} /> */}
   <Route path="/login" element={<LoginPage />} />
   {/* <Route path="/creation" element={<CreationPage />} /> */}
   <Route path="/operation" element={<Operation />} />

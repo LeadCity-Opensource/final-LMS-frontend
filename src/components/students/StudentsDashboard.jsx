@@ -16,6 +16,7 @@ const books = [
 function StudentsDashboard() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [showHelp, setShowHelp] = useState(false);
 
   return (
     <div className="student-dashboard">
@@ -41,10 +42,34 @@ function StudentsDashboard() {
             Borrowed Books
             </Link>
             </li>
-          <li>Downloads</li>
-          <li>History</li>
+          
           <li>Settings</li>
-          <li>Help</li>
+          <>
+  <li 
+    className="cursor-pointer p-2 hover:bg-none rounded" 
+    onClick={() => setShowHelp(true)}
+  >
+    Help
+  </li>
+
+  {/* Simple conditional rendering of a Help Alert */}
+  {showHelp && (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg max-w-sm">
+        <h2 className="text-xl font-bold mb-2">Library Help</h2>
+        <p className="text-gray-600 mb-4">
+          To borrow a book, click on the book title. For ISBN issues, contact the admin.
+        </p>
+        <button 
+          onClick={() => setShowHelp(false)}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  )}
+</>
         </ul>
 
         <button
