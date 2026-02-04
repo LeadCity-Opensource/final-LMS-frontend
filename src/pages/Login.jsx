@@ -32,14 +32,15 @@ function Login() {
     setError("");
   
     try {
-      const response = await loginUser(formData);
   
-      const token = response.data.token;
-      const role = response.data.role;
-  
-      // save auth data
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", role);
+const response = await loginUser(formData);
+
+const { token, role, name, matricNumber } = response.data; 
+
+localStorage.setItem("token", token);
+localStorage.setItem("role", role);
+localStorage.setItem("userName", name);   
+localStorage.setItem("userMatric", matricNumber); 
   
       // role-based navigation
       if (role === "admin") {

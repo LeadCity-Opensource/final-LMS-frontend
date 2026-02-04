@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./StudentsDashboard.css";
 import { Link, useNavigate } from "react-router-dom";
-
+import { User } from "lucide-react";
 
 
 
@@ -18,16 +18,36 @@ function StudentsDashboard() {
   const navigate = useNavigate();
   const [showHelp, setShowHelp] = useState(false);
 
+  const userName = localStorage.getItem("userName") || "Student";
+  const userMatric = localStorage.getItem("userMatric") || "LCU/STUDENT/001";
+  const userInitial = userName.charAt(0).toUpperCase();
+  
+
   return (
     <div className="student-dashboard">
       {/* Sidebar */}
       <div className={`sidebar ${open ? "open" : ""}`}>
         <div className="close-btn" onClick={() => setOpen(false)}>✕</div>
         <div className="profile">
-          <img src="https://i.pravatar.cc/100" alt="profile" />
-          <h3>Barbecue Saint</h3>
-          <p>UID: STUDENT_BY15</p>
-        </div>
+  {/* Replacing the <img> with a clean Initial Circle */}
+  <div style={{
+    width: '60px', 
+    height: '60px', 
+    backgroundColor: '#007bff', 
+    borderRadius: '50%', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    color: 'white',
+    fontSize: '24px',
+    fontWeight: 'bold',
+    margin: '0 auto 10px'
+  }}>
+    {userInitial}
+  </div>
+  <h3>{userName}</h3>
+  <p>{userMatric}</p>
+</div>
 
         <ul>
           <li>Profile</li>
@@ -75,8 +95,7 @@ function StudentsDashboard() {
         <button
   className="logout"
   onClick={() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    localStorage.clear();
     navigate("/login");
   }}
 >
@@ -87,14 +106,27 @@ function StudentsDashboard() {
 
       {/* Top Bar */}
       <div className="topbar">
-        <div className="menu" onClick={() => setOpen(true)}>☰</div>
-        <img src="https://i.pravatar.cc/40" alt="avatar" />
-      </div>
+  <div className="menu" onClick={() => setOpen(true)}>☰</div>
+  {/* Replacing the small avatar with a matching Initial Circle */}
+  <div style={{
+    width: '35px', 
+    height: '35px', 
+    backgroundColor: '#007bff', 
+    borderRadius: '50%', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    color: 'white',
+    fontWeight: 'bold'
+  }}>
+    {userInitial}
+  </div>
+</div>
 
       {/* Hero Section */}
       <div className="hero">
-        <h1>Welcome Barbecue saint</h1>
-        <h4>LCU/AB/12/34567</h4>
+      <h1>Welcome {userName}</h1> {/* Dynamic Welcome Message */}
+      <h4>{userMatric}</h4>
         <p className="quote">
           Read a thousand books, and your words will flow like a river; travel a thousand miles, and your feet will gain experience.
         </p>
