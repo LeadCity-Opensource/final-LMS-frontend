@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const BookList = ({
   books = [],
@@ -35,7 +37,8 @@ const BookList = ({
               {books.map((book) => (
                 <tr
                   key={book.id}
-                  className="border-b hover:bg-gray-50 transition"
+                  className="border-b hover:bg-gray-50 transition cursor-pointer"
+                  onClick={() => navigate(`/bookdetails/:id/${book.id}`)}
                 >
                   <td className="p-3 font-semibold text-gray-800">
                     {book.title}

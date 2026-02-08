@@ -84,7 +84,7 @@ const groupedBooks = useMemo(() => {
     groups[category].push(book);
   });
   return groups;
-}, [filteredBooks]); // Don't forget to update the dependency here too!
+}, [filteredBooks]);
 
   return (
     <div className="min-h-screen bg-[#00E5FF] font-sans">
@@ -122,12 +122,12 @@ const groupedBooks = useMemo(() => {
           
         </div>
       </div>
-      <button
+      {/* <button
   onClick={fetchAllBooks}
   className="px-4 py-2 bg-blue-500 text-white rounded-lg"
 >
   Refresh Books
-</button>
+</button> */}
 
       {loading && <div className="text-center mt-10">Loading books...</div>}
       {error && <div className="text-center mt-10 text-red-600">{error}</div>}
