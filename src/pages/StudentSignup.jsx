@@ -158,7 +158,7 @@ const StudentSignup = () => {
           <input
             type="text"
             name="matricNumber"
-            placeholder="STU12345"
+            placeholder="LCU/2010/12345"
             required
             value={formData.matricNumber}
             onChange={handleChange}

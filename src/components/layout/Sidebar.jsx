@@ -173,7 +173,7 @@ const Sidebar = ({ role = "student", open, onClose, user }) => {
 
           {/* Menu */}
           <nav className="px-4 space-y-1">
-  {menu[role].map((item, index) => {
+          {menu[role]?.map((item, index) => {
     const Icon = item.icon;
     const isOpen = openMenu === index;
 

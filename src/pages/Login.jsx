@@ -41,6 +41,7 @@ localStorage.setItem("token", token);
 localStorage.setItem("role", role);
 localStorage.setItem("userName", name);   
 localStorage.setItem("userMatric", matricNumber); 
+
   
       // role-based navigation
       if (role === "admin") {
@@ -132,7 +133,7 @@ localStorage.setItem("userMatric", matricNumber);
         <p className="text-sm text-gray-700">
           Don't have an account?{" "}
           <span
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => navigate("/signup/student")}
             className="text-white font-semibold cursor-pointer"
           >
             Sign up

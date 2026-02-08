@@ -78,7 +78,7 @@ function StudentsDashboard() {
       <div className="bg-white p-6 rounded-lg max-w-sm">
         <h2 className="text-xl font-bold mb-2">Library Help</h2>
         <p className="text-gray-600 mb-4">
-          To borrow a book, click on the book title. For ISBN issues, contact the admin.
+        If you can’t borrow a book using the library app, you’ll need to visit the library in person and bring your library card.
         </p>
         <button 
           onClick={() => setShowHelp(false)}
