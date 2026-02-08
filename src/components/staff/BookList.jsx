@@ -38,7 +38,7 @@ const BookList = ({
                 <tr
                   key={book.id}
                   className="border-b hover:bg-gray-50 transition cursor-pointer"
-                  onClick={() => navigate(`/bookdetails/:id/${book.id}`)}
+                  onClick={() => navigate(`/bookdetails/${book.id}`)}
                 >
                   <td className="p-3 font-semibold text-gray-800">
                     {book.title}
