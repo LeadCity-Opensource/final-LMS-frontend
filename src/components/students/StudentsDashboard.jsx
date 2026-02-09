@@ -8,12 +8,12 @@ import { getAllBooks } from "../../services/api";
 
 
 
-const books = [
-  { title: "Quantum Physics", img: "https://picsum.photos/200?1" },
-  { title: "Biography", img: "https://picsum.photos/200?2" },
-  { title: "Applied Geophysics", img: "https://picsum.photos/200?3" },
-  { title: "Biography", img: "https://picsum.photos/200?4" },
-];
+// const books = [
+//   { title: "Quantum Physics", img: "https://picsum.photos/200?1" },
+//   { title: "Biography", img: "https://picsum.photos/200?2" },
+//   { title: "Applied Geophysics", img: "https://picsum.photos/200?3" },
+//   { title: "Biography", img: "https://picsum.photos/200?4" },
+// ];
 
 function StudentsDashboard() {
   const [open, setOpen] = useState(false);
