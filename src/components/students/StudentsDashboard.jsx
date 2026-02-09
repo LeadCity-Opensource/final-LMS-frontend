@@ -161,16 +161,15 @@ function StudentsDashboard() {
   <div className="books">
     {books.map((book) => (
       <div
-        key={book.id}
-        className="book-card cursor-pointer"
-        onClick={() => navigate("/students/search")}
-      >
-        <img
-          src={book.cover || "https://via.placeholder.com/150"}
-          alt={book.title}
-        />
-        <p>{book.title}</p>
-      </div>
+      key={book.id}
+      className="book-card cursor-pointer flex items-center justify-center bg-black-150 rounded-md w-40 h-60 relative"
+      onClick={() => navigate("/students/search")}
+    >
+      <span className="text-center px-2 text-gray-800 font-semibold">
+        {book.title}
+      </span>
+    </div>
+    
     ))}
   </div>
 </div>
