@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import "./StudentsDashboard.css";
 import { Link, useNavigate } from "react-router-dom";
 import { User } from "lucide-react";
+import { getAllBooks } from "../../services/api";
+
 
 
 
@@ -15,12 +17,31 @@ const books = [
 
 function StudentsDashboard() {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+
   const [showHelp, setShowHelp] = useState(false);
+
+  const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
+  
+  
+  useEffect(() => {
+    async function fetchBooks() {
+      try {
+        const response = await getAllBooks();
+        // Just show first 4 books on dashboard
+        setBooks(response.data.slice(0, 4));
+      } catch (error) {
+        console.error("Failed to load books");
+      }
+    }
+  
+    fetchBooks();
+  }, []);
 
   const userName = localStorage.getItem("userName") || "Student";
   const userMatric = localStorage.getItem("userMatric") || "LCU/STUDENT/001";
   const userInitial = userName.charAt(0).toUpperCase();
+
   
 
   return (
@@ -135,16 +156,24 @@ function StudentsDashboard() {
 
       {/* Continue Reading */}
       <div className="books-section">
-        <h3>Continue Reading...</h3>
-        <div className="books">
-          {books.map((book, index) => (
-            <div key={index} className="book-card">
-              <img src={book.img} alt={book.title} />
-              <p>{book.title}</p>
-            </div>
-          ))}
-        </div>
+  <h3>Available Books</h3>
+
+  <div className="books">
+    {books.map((book) => (
+      <div
+        key={book.id}
+        className="book-card cursor-pointer"
+        onClick={() => navigate("/students/search")}
+      >
+        <img
+          src={book.cover || "https://via.placeholder.com/150"}
+          alt={book.title}
+        />
+        <p>{book.title}</p>
       </div>
+    ))}
+  </div>
+</div>
     </div>
   );
 }
