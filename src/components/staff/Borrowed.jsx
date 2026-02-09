@@ -124,9 +124,22 @@ const DueText = styled.div`
 const BorrowedPage = () => {
   const location = useLocation();
   const [borrowedBooks, setBorrowedBooks] = useState(
-    JSON.parse(localStorage.getItem("borrowedBooks")) || []
+    JSON.parse(localStorage.getItem("borrowers")) || []
+
   );
   
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const borrowers = JSON.parse(localStorage.getItem("borrowers")) || [];
+  
+    if (!user) return;
+  
+    const myBooks = borrowers.filter(
+      (item) => item.user.email === user.email
+    );
+  
+    setBorrowedBooks(myBooks);
+  }, []);
   
 
   
@@ -155,24 +168,32 @@ const BorrowedPage = () => {
 </Header>
 
       <BooksContainer>
-        {borrowedBooks.map((book) => (
-          <BookCard key={book.id}>
-            <BookMain>
-              <BookImage src={book.cover || "/Rectangle 37.png"} alt={book.title} />
-              <BookDetails>
-                <BookTitle>
-                  <strong>{book.title}</strong>
-                </BookTitle>
-                <p>{book.author}</p>
-              </BookDetails>
-            </BookMain>
-            <DueWrapper>
-              <DueText>
-                Due <span>7</span> {/* You can calculate due dates dynamically later */}
-              </DueText>
-            </DueWrapper>
-          </BookCard>
-        ))}
+      {borrowedBooks.map((item) => (
+  <BookCard key={item.borrowId}>
+    <BookMain>
+      <BookImage
+        src={item.book.cover || "/Rectangle 37.png"}
+        alt={item.book.title}
+      />
+      <BookDetails>
+        <BookTitle>
+          <strong>{item.book.title}</strong>
+        </BookTitle>
+        <p>{item.book.author}</p>
+      </BookDetails>
+    </BookMain>
+
+    <DueWrapper>
+      <DueText>
+        Due{" "}
+        <span>
+          {new Date(item.dueDate).toLocaleDateString()}
+        </span>
+      </DueText>
+    </DueWrapper>
+  </BookCard>
+))}
+
       </BooksContainer>
     </Page>
   );
