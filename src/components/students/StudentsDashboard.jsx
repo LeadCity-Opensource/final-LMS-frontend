@@ -162,10 +162,10 @@ function StudentsDashboard() {
     {books.map((book) => (
       <div
       key={book.id}
-      className="book-card cursor-pointer flex items-center justify-center bg-black-150 rounded-md w-40 h-60 relative"
+      className="book-card cursor-pointer flex items-center justify-center bg-gray-800 rounded-md w-40 h-60 relative"
       onClick={() => navigate("/students/search")}
     >
-      <span className="text-center px-2 text-gray-800 font-semibold">
+      <span className="text-center px-2 text-white font-semibold">
         {book.title}
       </span>
     </div>
