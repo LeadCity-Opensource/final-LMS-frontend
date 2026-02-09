@@ -1,20 +1,33 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./StaffDashboard.css";
 import { Link } from "react-router-dom";
+import { getAllBooks } from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import { getAllBooks } from "../../services/api";
 
 
-
-
-const books = [
-  { title: "Quantum Physics", img: "https://picsum.photos/200?1" },
-  { title: "Biography", img: "https://picsum.photos/200?2" },
-  { title: "Applied Geophysics", img: "https://picsum.photos/200?3" },
-  { title: "Biography", img: "https://picsum.photos/200?4" },
-];
 
 function StaffDashboard() {
   const [open, setOpen] = useState(false);
+  const [books, setBooks] = useState([]);
+const navigate = useNavigate();
+
+
+useEffect(() => {
+  async function fetchBooks() {
+    try {
+      const response = await getAllBooks();
+      // Just show first 4 books on dashboard
+      setBooks(response.data.slice(0, 4));
+    } catch (error) {
+      console.error("Failed to load books");
+    }
+  }
+
+  fetchBooks();
+}, []);
+
 
   return (
     <div className="student-dashboard">
@@ -85,16 +98,25 @@ function StaffDashboard() {
 
       {/* Continue Reading */}
       <div className="books-section">
-        <h3>Continue Reading...</h3>
-        <div className="books">
-          {books.map((book, index) => (
-            <div key={index} className="book-card">
-              <img src={book.img} alt={book.title} />
-              <p>{book.title}</p>
-            </div>
-          ))}
-        </div>
+  <h3>Available Books</h3>
+
+  <div className="books">
+    {books.map((book) => (
+      <div
+        key={book.id}
+        className="book-card cursor-pointer"
+        onClick={() => navigate("/students/search")}
+      >
+        <img
+          src={book.cover || "https://via.placeholder.com/150"}
+          alt={book.title}
+        />
+        <p>{book.title}</p>
       </div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 }
