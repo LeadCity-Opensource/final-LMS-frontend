@@ -8,6 +8,7 @@ const BookList = ({
   onDelete,
   showActions = false
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white rounded-xl shadow p-4">
       <h2 className="text-xl font-bold mb-4 text-gray-800">
